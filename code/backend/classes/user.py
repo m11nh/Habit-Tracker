@@ -1,9 +1,10 @@
 class user():
-	def __init__(self, username, password, email): 
+	def __init__(self, username, password, email, id): 
 		self._username = username
 		self._password = password
 		self._email = email
 		self._habit_list = []
+		self._id = id
 
 	@property
 	def username(self):
@@ -12,6 +13,10 @@ class user():
 	@property
 	def password(self):
 		return self._password
+
+	@property
+	def id(self):
+		return self._id
 
 	@password.setter
 	def password(self, new_password):

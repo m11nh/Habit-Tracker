@@ -1,12 +1,17 @@
-from user import user
-from habit import habit
-from admin import admin
+from classes.user import user
+from classes.habit import habit
+from classes.admin import admin
 from datetime import date
 
 class iHabit_system():
 	def __init__(self):
 		self._user_list = []
 		self._admin_list = []
+		self._identifiers = {
+			"user": 0, 
+			"admin": 0, 
+			"habit": 0
+		}
 
 	@property 
 	def user_list(self):
@@ -18,23 +23,29 @@ class iHabit_system():
 	
 	def add_user(self, username, password, email): 
 		# add field validation here
-		x = user(username, password, email)
+		id = self._identifiers["user"]
+		self._identifiers["user"] += 1
+		x = user(username, password, email, id)
 		self._user_list.append(x)
-		#print(id(x))
-		return id(x)
+		return id
 
 	def add_admin(self, username, password):
 		# add validation here
-		x = admin(username, password)
+		id = self._identifiers["admin"]
+		self._identifiers["admin"] += 1
+		x = admin(username, password, id)
 		self._admin_list.append(x)
-		return id(x)
+		return id
+		
 
 	def add_habit(self, user_id, habit_name):
 		# add validation here
+		id = self._identifiers["habit"]
+		self._identifiers["habit"] += 1
 		x = habit(habit_name)
 		user = self.get_user(user_id)
 		user._habit_list.append(x)
-		return id(x)
+		return id
 	
 	def checkoff_habit(self, user_id, habit_id):
 		habit = self.get_habit(user_id, habit_id)
@@ -108,14 +119,14 @@ class iHabit_system():
 	def get_user(self, user_id): 
 		for user in self._user_list:
 			#print(id(user))
-			if id(user) == user_id:
+			if user.id == user_id:
 				return user
 		return -1
 
 	def get_admin(self, admin_id): 
 		for admin in self._admin_list:
 			#print(id(admin))
-			if id(admin) == admin_id:
+			if admin.id == admin_id:
 				return admin
 		return -1
 
@@ -125,44 +136,13 @@ class iHabit_system():
 		if user == -1: 
 			return -1
 		for habit in user.habit_list: 
-			if id(habit) == habit_id:
+			if habit.id == habit_id:
 				return habit
 		return -1
 
 
 
 
-
-
-
-
-system = iHabit_system()
-user_id = system.add_user('john', 'soai', 'john@gmail.com')
-#print(user)
-
-habit_id = system.add_habit(user_id, habit('hot'))
-system.checkoff_habit(user_id, habit_id)
-print("hey buddy: {}".format(system.get_habit(user_id, habit_id).days_executed))
-system.uncheck_habit(user_id, habit_id)
-print("hey buddy: {}".format(system.get_habit(user_id, habit_id).days_executed))
-print(system.current_streak(user_id, habit_id))
-
-user = system.get_user(user_id)
-print(user.habit_list)
-system.remove_habit(user_id, habit_id)
-print(user.habit_list)
-
-print(user.email)
-system.change_email(user_id, 'fuckboi69@hotmail.com')
-print(user.email)
-
-print(user.password)
-system.change_password(user_id, 'sexynigga33')
-print(user.password)
-
-print(system._user_list)
-system.user_remove_account(user_id, 'soai')
-print(system._user_list)
 
 
 

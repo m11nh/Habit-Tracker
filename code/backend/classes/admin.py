@@ -1,11 +1,16 @@
 class admin():
-	def __init__(self, username, password):
+	def __init__(self, username, password, id):
 		self._username = username
 		self._password = password
+		self._id = id
 
 	@property
 	def username(self):
 		return self._username
+
+	@property 
+	def id(self):
+		return self._id
 
 	@username.setter
 	def username(self, new_username): 
