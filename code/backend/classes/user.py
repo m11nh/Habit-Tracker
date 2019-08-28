@@ -1,3 +1,5 @@
+import json
+
 class user():
 	def __init__(self, username, password, email, id): 
 		self._username = username
@@ -37,7 +39,8 @@ class user():
 	def __str__(self):
 		return "{}, {}, {}".format(self.username, self._password, self._email)
 
-
+	def toJSON(self):
+		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 
 

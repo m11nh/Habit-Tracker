@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
@@ -19,7 +19,10 @@ def home():
 
 @app.route("/users", methods = ["GET"])
 def users():
-	return jsonify(system.user_list)
+	user_list = [];
+	for user in system.user_list:
+		user_list.append(user.toJSON())
+	return jsonify(user_list)
 
 
 
