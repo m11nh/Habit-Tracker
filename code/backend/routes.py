@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
@@ -6,23 +6,26 @@ from client import start_client, pickle_update
 system = start_client()
 system.add_user('john', 'wick', 'jwick@hotmail.com')
 pickle_update(system)
+ 
+# USER SERVICES
+@app.route("/user", methods = ["GET"])
+def get_user():
+	pass
 
-#debugging
-for user in system.user_list:
-	print(user.id)
+@app.route("/user", methods = ["POST"])
+def add_user():
+	pass
 
-print(system.get_user(9))
+@app.route("/user", methods = ["PUT"])
+def update_user():
+	pass
 
-@app.route("/", methods = ["GET"])
-def home():
-	return "HELLO DADDY" 
+@app.route("/user", methods = ["DELETE"])
+def remove_user():
+	data = request.get_json()
+	print("delete", data)
+	return "hey HEEEEEY BUDDY"
 
-@app.route("/users", methods = ["GET"])
-def users():
-	user_list = [];
-	for user in system.user_list:
-		user_list.append(user.toJSON())
-	return jsonify(user_list)
+# HABIT SERVICES
 
-
-
+# AUTH SERVICES
