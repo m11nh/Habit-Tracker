@@ -10,11 +10,20 @@ pickle_update(system)
 # USER SERVICES
 @app.route("/user", methods = ["GET"])
 def get_user():
-	pass
+	data = request.get_json()
+	user_id = data["user_id"]
+	user = system.get_user(user_id)
+	if (user != -1):
+		return user.toJSON()
 
 @app.route("/user", methods = ["POST"])
 def add_user():
-	pass
+	data = request.get_json()
+	username = data["username"]
+	password = data["password"]
+	email = data["email"]
+	system.add_user(username, password, email)
+	return 0
 
 @app.route("/user", methods = ["PUT"])
 def update_user():
@@ -26,6 +35,46 @@ def remove_user():
 	print("delete", data)
 	return "hey HEEEEEY BUDDY"
 
+# ADMIN SERVICES
+@app.route("/admin", methods = ["GET"])
+def get_admin():
+	pass
+
+@app.route("/admin", methods = ["POST"])
+def add_admin():
+	pass
+
+@app.route("/admin", methods = ["PUT"])
+def update_admin():
+	pass
+
+@app.route("/admin", methods = ["DELETE"])
+def remove_admin():
+	pass
+
 # HABIT SERVICES
+@app.route("/habit", methods = ["GET"]) 
+def get_habit():
+	pass
+
+@app.route("/habit", methods = ["POST"])
+def add_habit():
+	pass
+
+@app.route("/habit", methods = ["DELETE"])
+def remove_habit():
+	pass
+
+@app.route("/habit", methods = ["PUT"]) # payload decides whether check or uncheck
+def update_habit_status():
+	pass
 
 # AUTH SERVICES
+@app.route("/auth/user", methods = ["POST"])
+def auth_user():
+	pass
+	
+@app.route("/auth/admin", methods = ["POST"])
+def auth_admin():
+	pass
+
