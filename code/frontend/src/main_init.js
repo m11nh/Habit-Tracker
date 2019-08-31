@@ -1,4 +1,4 @@
-import { signup } from '/src/signup.js';
+import { signup } from '/src/js_src/signup.js';
 
 export function main_init(API_URL) {
 	// set API_URL 

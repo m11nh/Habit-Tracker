@@ -1,5 +1,5 @@
 import { main_init } from '/src/main_init.js'
-import { signup } from '/src/signup.js'
+
 
 
 function initialise_app(API_URL) {
