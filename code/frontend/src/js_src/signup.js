@@ -1,31 +1,39 @@
-export function signup(parent) {
+import { add_div, add_input_field, add_button, postData } from '/src/js_tools.js'
+
+export function add_signup(parent) {
 	const api = localStorage.getItem("API_URL");
-	const form = signup_form(parent);
+	const form = add_signup_form(parent);
+	add_signup_event(form);
+	return form;
 }
 
 
-function signup_form(parent) {
-	let username = input_field(parent, 'text', 'signup_username', 'username', '');
-	let password = input_field(parent, 'text', 'signup_password', 'password', '');
-	let email = input_field(parent, 'text', 'signup_email', 'email', '');
-	let button = button(parent, 'signup_button', 'signup');
-	return button
+function add_signup_form(parent) {
+	let hash = {};
+	hash['div'] = add_div(parent, 'signup_form');
+	hash['username'] = add_input_field(hash['div'], 'text', 'signup_username', 'username', '');
+	hash['password'] = add_input_field(hash['div'], 'text', 'signup_password', 'password', '');
+	hash['email'] = add_input_field(hash['div'], 'text', 'signup_email', 'email', '');
+	hash['signup_button'] = add_button(hash['div'], 'button', 'signup_button', 'signup');
+	return hash
 }
 
-function input_field(parent, type, id, placeholder, value) {
-	let field = document.createElement('input');
-	field.type = type;
-	field.id = id;
-	field.placeholder = placeholder;
-	field.value = value;
-	parent.appendChild(field);
-	return field;
+function add_signup_event(form) {
+	let apiUrl = localStorage.getItem('API_URL');
+	let button = form['signup_button'];
+	button.addEventListener('click', (event) => {
+		let data = {
+			'username': form['username'].value,
+			'password': form['password'].value,
+			'email': form['email'].value 
+		}
+		let url = `${apiUrl}user`
+		let fetch = postData(url, data);
+		fetch.then((response) => {
+			alert(response.status)
+		})
+	})
+	
+
 }
 
-function button(parent, id, innerText) {
-	let button = document.createElement('button');
-	button.id = id;
-	button.innerText = innerText;
-	parent.appendChild(button);
-	return button;
-}
