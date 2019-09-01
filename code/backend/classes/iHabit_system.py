@@ -21,6 +21,7 @@ class iHabit_system():
 	def admin_list(self):
 		return self._admin_list
 	
+	# main functions for user use
 	def add_user(self, username, password, email): 
 		# add field validation here
 		id = self._identifiers["user"]
@@ -115,6 +116,15 @@ class iHabit_system():
 		else: 
 			return -1
 
+	#other functions
+	def username_available(self, username): 
+		for user in self._user_list: 
+			if user.username == username: 
+				return -1
+		print('found')
+		return 0
+
+
 	#retrieval functions
 	def get_user(self, user_id): 
 		for user in self._user_list:
@@ -139,6 +149,7 @@ class iHabit_system():
 			if habit.id == habit_id:
 				return habit
 		return -1
+
 
 
 

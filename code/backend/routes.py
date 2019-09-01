@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
+from validation.form_validation import validate_signup
 
 system = start_client()
 system.add_user('john', 'wick', 'jwick@hotmail.com')
@@ -22,8 +23,16 @@ def add_user():
 	username = data["username"]
 	password = data["password"]
 	email = data["email"]
-	user = system.add_user(username, password, email)
-	print(system.get_user(user))
+
+	if validate_signup(username, password, email) == 0: 
+		if system.username_available(username): 
+			print('success')
+		else: 
+			print('username taken')
+	else: 
+		print(validate_signup(username, password, email))
+	#user = system.add_user(username, password, email)
+	#print(system.get_user(user))
 	return 'hey'
 
 @app.route("/user", methods = ["PUT"])
