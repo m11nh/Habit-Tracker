@@ -22,8 +22,9 @@ def add_user():
 	username = data["username"]
 	password = data["password"]
 	email = data["email"]
-	system.add_user(username, password, email)
-	return 0
+	user = system.add_user(username, password, email)
+	print(system.get_user(user))
+	return 'hey'
 
 @app.route("/user", methods = ["PUT"])
 def update_user():
