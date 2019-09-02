@@ -29,8 +29,10 @@ returns:
 	- if id not supplied - returns list of users in database
 
 	# POST
-	- (username, password, email) => return status
-	- create new user account
+	- (username, password, email) => return user details
+	- 400 -> error
+	- 200 -> user Json object
+	- creates new user account
 
 	# PUT 
 	- (id, email and/or password) => return status

@@ -1,4 +1,4 @@
-import { add_div, add_input_field, add_button, postData } from '/src/js_tools.js'
+import { add_form, add_input_field, add_button, postData, add_text } from '/src/js_tools.js'
 
 export function add_signup(parent) {
 	const api = localStorage.getItem("API_URL");
@@ -10,11 +10,13 @@ export function add_signup(parent) {
 
 function add_signup_form(parent) {
 	let hash = {};
-	hash['div'] = add_div(parent, 'signup_form');
-	hash['username'] = add_input_field(hash['div'], 'text', 'signup_username', 'username', '');
-	hash['password'] = add_input_field(hash['div'], 'text', 'signup_password', 'password', '');
-	hash['email'] = add_input_field(hash['div'], 'text', 'signup_email', 'email', '');
-	hash['signup_button'] = add_button(hash['div'], 'button', 'signup_button', 'signup');
+	hash['form'] = add_form(parent, 'signup_form');
+	hash['username'] = add_input_field(hash['form'], 'text', 'signup_username', 'username', '');
+	hash['password'] = add_input_field(hash['form'], 'text', 'signup_password', 'password', '');
+	hash['email'] = add_input_field(hash['form'], 'text', 'signup_email', 'email', '');
+	hash['signup_button'] = add_button(hash['form'], 'button', 'signup_button', 'signup');
+	hash['message'] = add_text(hash['form'], 'signup_message');
+
 	return hash
 }
 
@@ -27,13 +29,33 @@ function add_signup_event(form) {
 			'password': form['password'].value,
 			'email': form['email'].value 
 		}
-		let url = `${apiUrl}user`
+		let url = `${apiUrl}user`;
 		let fetch = postData(url, data);
-		fetch.then((response) => {
-			alert(response.status)
+		fetch
+		.then((response) => {
+			response = {'status' :  response.status, 'myJson' : response.json()};
+			return response
+		})
+		.then((response) => {
+			if (response['status'] == 200) {
+				response['myJson']
+				.then((myJson) => {
+					let message = `Signup successful. Login with username: ${myJson._username}, password: ${myJson._password}`;
+					form['message'].innerText = message;
+					form['form'].reset()
+				})
+			}
+			else {
+				response['myJson']
+				.then((myJson) => {
+					form['message'].innerText = myJson.error
+				})
+			}
 		})
 	})
 	
 
 }
+
+
 

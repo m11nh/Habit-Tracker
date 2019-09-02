@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_api import status
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
@@ -23,17 +24,18 @@ def add_user():
 	username = data["username"]
 	password = data["password"]
 	email = data["email"]
-
+	print(system._user_list[0]);
 	if validate_signup(username, password, email) == 0: 
-		if system.username_available(username): 
-			print('success')
+		if system.username_available(username) == 0: 
+			user_id = system.add_user(username, password, email)
+			user = system.get_user(user_id)
+			return user.toJSON(), status.HTTP_200_OK
 		else: 
-			print('username taken')
+			error = {'error' : 'username taken'};
+			return error, status.HTTP_400_BAD_REQUEST
 	else: 
-		print(validate_signup(username, password, email))
-	#user = system.add_user(username, password, email)
-	#print(system.get_user(user))
-	return 'hey'
+		error = {'error' : validate_signup(username, password, email)}
+		return error, status.HTTP_400_BAD_REQUEST
 
 @app.route("/user", methods = ["PUT"])
 def update_user():
@@ -82,7 +84,7 @@ def update_habit_status():
 # AUTH SERVICES
 @app.route("/auth/user", methods = ["POST"])
 def auth_user():
-	pass
+	return 'HEY BUDDY'
 	
 @app.route("/auth/admin", methods = ["POST"])
 def auth_admin():

@@ -13,11 +13,18 @@ export function add_break(parent) {
 
 //export function add_modal(parent) {
 
-export function add_div(parent, id) {
-	let div = document.createElement('div');
-	div.id = id;
-	parent.appendChild(div);
-	return div;
+export function add_form(parent, id) {
+	let form = document.createElement('form');
+	form.id = id;
+	parent.appendChild(form);
+	return form;
+}
+
+export function add_text(parent, id) {
+	let text = document.createElement('text');
+	text.id = id;
+	parent.appendChild(text);
+	return text;
 }
 
 export function add_input_field(parent, type, id, placeholder, value) {
@@ -51,5 +58,7 @@ export function postData(url = '', data = {}) {
 		body: JSON.stringify(data)
 	})
 }
+
+
 
 
