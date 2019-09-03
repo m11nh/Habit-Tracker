@@ -22,7 +22,6 @@ def add_user():
 	username = data["username"]
 	password = data["password"]
 	email = data["email"]
-	print(system._user_list[0]);
 	if validate_signup(username, password, email) == 0: 
 		if system.username_available(username) == 0: 
 			user_id = system.add_user(username, password, email)
@@ -43,7 +42,6 @@ def update_user():
 @app.route("/user", methods = ["DELETE"])
 def remove_user():
 	data = request.get_json()
-	print("delete", data)
 	return "hey HEEEEEY BUDDY"
 
 # ADMIN SERVICES

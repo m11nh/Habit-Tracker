@@ -14,7 +14,6 @@ export function main_init(API_URL) {
 		let login = add_login(main);
 	}
 	else {
-		alert('logged in!');
 		let logout = add_logout(main);
 	}
 }
