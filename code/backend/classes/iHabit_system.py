@@ -85,8 +85,8 @@ class iHabit_system():
 		# add field validation here
 		for user in self._user_list:
 			if user.username == username and user.password == password: 
-				return True
-		return False
+				return 0
+		return -1
 
 	def change_email(self, user_id, new_email):
 		user = self.get_user(user_id)

@@ -3,11 +3,9 @@ from flask_api import status
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
-from validation.form_validation import validate_signup
+from validation.form_validation import validate_signup, validate_login
 
 system = start_client()
-system.add_user('john', 'wick', 'jwick@hotmail.com')
-pickle_update(system)
  
 # USER SERVICES
 @app.route("/user", methods = ["GET"])
@@ -28,10 +26,11 @@ def add_user():
 	if validate_signup(username, password, email) == 0: 
 		if system.username_available(username) == 0: 
 			user_id = system.add_user(username, password, email)
+			pickle_update(system)
 			user = system.get_user(user_id)
 			return user.toJSON(), status.HTTP_200_OK
 		else: 
-			error = {'error' : 'username taken'};
+			error = {'error' : 'username taken'}
 			return error, status.HTTP_400_BAD_REQUEST
 	else: 
 		error = {'error' : validate_signup(username, password, email)}
@@ -84,7 +83,18 @@ def update_habit_status():
 # AUTH SERVICES
 @app.route("/auth/user", methods = ["POST"])
 def auth_user():
-	return 'HEY BUDDY'
+	data = request.get_json()
+	username = data["username"]
+	password = data["password"]
+	if validate_login(username, password) == 0:
+		if system.authenticate_user(username, password) == 0: 
+			return {}, status.HTTP_200_OK
+		else:
+			error = {'error' : 'wrong username or password'}
+			return error, status.HTTP_400_BAD_REQUEST
+	else: 
+		error = {'error' : validate_login(username, password)}
+		return error, status.HTTP_400_BAD_REQUEST
 	
 @app.route("/auth/admin", methods = ["POST"])
 def auth_admin():

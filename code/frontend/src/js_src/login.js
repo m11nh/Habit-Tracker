@@ -29,11 +29,7 @@ function add_login_event(form) {
 		}
 		let url = `${apiUrl}auth/user`;
 		let fetch = postData(url, data);
-		fetch
-		.then((response) => {
-			alert(response.status);
-		})
-		/*
+		
 		fetch
 		.then((response) => {
 			response = {'status' :  response.status, 'myJson' : response.json()};
@@ -43,7 +39,7 @@ function add_login_event(form) {
 			if (response['status'] == 200) {
 				response['myJson']
 				.then((myJson) => {
-					let message = `login successful. Login with username: ${myJson._username}, password: ${myJson._password}`;
+					let message = `login successful.`;
 					form['message'].innerText = message;
 					form['form'].reset()
 				})
@@ -54,7 +50,7 @@ function add_login_event(form) {
 					form['message'].innerText = myJson.error
 				})
 			}
-		})*/
+		})
 	})
 	
 

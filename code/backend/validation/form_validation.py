@@ -14,7 +14,18 @@ def validate_signup(username, password, email):
 			return password_errors
 		return email_errors
 
+def validate_login(username, password):
+	username_errors = standard_field_validator('username', username, 4)
+	password_errors = standard_field_validator('password', password, 4)
 
-print(validate_signup('heybuddy', 'mod', '21@839hotmail.SHIAH'))
+	if username_errors == 0 and password_errors == 0: 
+		return 0
+	else: 
+		if username_errors != 0: 
+			return username_errors
+		if password_errors != 0: 
+			return password_errors
+
+
 
 	
