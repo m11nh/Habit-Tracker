@@ -39,9 +39,11 @@ function add_login_event(form) {
 			if (response['status'] == 200) {
 				response['myJson']
 				.then((myJson) => {
+					localStorage.setItem('auth_id', myJson.id);
 					let message = `login successful.`;
 					form['message'].innerText = message;
-					form['form'].reset()
+					form['form'].reset();
+					document.location.reload();
 				})
 			}
 			else {

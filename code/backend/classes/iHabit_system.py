@@ -133,6 +133,11 @@ class iHabit_system():
 				return user
 		return -1
 
+	def get_user_id(self, username): 
+		for user in self._user_list:
+			if user.username == username: 
+				return user.id
+
 	def get_admin(self, admin_id): 
 		for admin in self._admin_list:
 			#print(id(admin))

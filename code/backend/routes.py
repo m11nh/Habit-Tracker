@@ -88,7 +88,8 @@ def auth_user():
 	password = data["password"]
 	if validate_login(username, password) == 0:
 		if system.authenticate_user(username, password) == 0: 
-			return {}, status.HTTP_200_OK
+			id = {'id' : system.get_user_id(username)}
+			return id, status.HTTP_200_OK
 		else:
 			error = {'error' : 'wrong username or password'}
 			return error, status.HTTP_400_BAD_REQUEST
