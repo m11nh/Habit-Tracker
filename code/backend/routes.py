@@ -63,7 +63,7 @@ def remove_admin():
 
 # HABIT SERVICES
 @app.route("/habit", methods = ["GET"]) 
-def get_habit():
+def get_habit(): 
 	pass
 
 @app.route("/habit", methods = ["POST"])
