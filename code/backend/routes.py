@@ -3,7 +3,7 @@ from flask_api import status
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
-from validation.form_validation import validate_signup, validate_login
+from validation.form_validation import validate_signup, validate_login, validate_add_habit
 
 system = start_client()
  
@@ -68,7 +68,23 @@ def get_habit():
 
 @app.route("/habit", methods = ["POST"])
 def add_habit():
-	pass
+	data = request.get_json()
+	habit_name = data['habit_name']
+	user_id = data['user_id']
+	user = system.get_user(user_id)
+	if validate_add_habit(habit_name) == 0: 
+		if user != -1: 
+			system.add_habit(user_id, habit_name)
+			pickle_update(system)
+			return {}, status.HTTP_200_OK
+		else: 
+			error = {'error' : 'unauthorized to make this request'}
+			return error, status.HTTP_400_BAD_REQUEST
+	else: 
+		error = {'error' : validate_add_habit(habit_name)}
+		return error, status.HTTP_400_BAD_REQUEST
+
+	return 'hey';
 
 @app.route("/habit", methods = ["DELETE"])
 def remove_habit():

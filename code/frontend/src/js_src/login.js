@@ -1,4 +1,4 @@
-import { add_form, add_input_field, add_button, postData, add_text } from '/src/js_tools.js'
+import { add_form, add_input_field, add_button, fetchData, add_text } from '/src/js_tools.js'
 
 export function add_login(parent) {
 	const api = localStorage.getItem("API_URL");
@@ -28,7 +28,7 @@ function add_login_event(form) {
 			'password': form['password'].value,
 		}
 		let url = `${apiUrl}auth/user`;
-		let fetch = postData(url, data);
+		let fetch = fetchData(url, data, 'POST');
 		
 		fetch
 		.then((response) => {

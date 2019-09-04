@@ -63,6 +63,7 @@ returns:
 # habit services - /habit
 	# GET 
 	- (id) => habit_info + streak
+	- if id empty, return list of habits of user
 
 	# POST
 	- (id) => return status

@@ -47,9 +47,9 @@ export function add_button(parent, type, id, innerText) {
 }
 
 // fetch functions
-export function postData(url = '', data = {}) {
+export function fetchData(url = '', data = {}, method_type = '') {
 	return fetch(url, {
-		method: 'POST',
+		method: method_type,
 		credentials: 'same-origin',  
 		headers: {
 			'Content-Type': 'application/json',

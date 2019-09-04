@@ -48,6 +48,8 @@ class habit(object):
 		return streak
 		#while()
 
+	def toJSON(self):
+		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 	def __str__(self):
 			return "{}, {}".format(self._name, self._todays_status)

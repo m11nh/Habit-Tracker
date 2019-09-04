@@ -1,4 +1,4 @@
-import { add_form, add_input_field, add_button, postData, add_text } from '/src/js_tools.js'
+import { add_form, add_input_field, add_button, fetchData, add_text } from '/src/js_tools.js'
 
 export function add_signup(parent) {
 	const api = localStorage.getItem("API_URL");
@@ -30,7 +30,7 @@ function add_signup_event(form) {
 			'email': form['email'].value 
 		}
 		let url = `${apiUrl}user`;
-		let fetch = postData(url, data);
+		let fetch = fetchData(url, data, 'POST');
 		fetch
 		.then((response) => {
 			response = {'status' :  response.status, 'myJson' : response.json()};

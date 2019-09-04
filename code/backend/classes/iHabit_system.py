@@ -128,8 +128,7 @@ class iHabit_system():
 	#retrieval functions
 	def get_user(self, user_id): 
 		for user in self._user_list:
-			#print(id(user))
-			if user.id == user_id:
+			if int(user.id) == int(user_id):
 				return user
 		return -1
 
@@ -154,6 +153,13 @@ class iHabit_system():
 			if habit.id == habit_id:
 				return habit
 		return -1
+
+	def get_habits(self, user_id): 
+		user = self.get_user(user_id)
+		if user == -1: 
+			return -1
+		else: 
+			return user.habit_list
 
 
 

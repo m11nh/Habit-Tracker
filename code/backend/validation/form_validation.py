@@ -26,6 +26,14 @@ def validate_login(username, password):
 		if password_errors != 0: 
 			return password_errors
 
+def validate_add_habit(habit_name):
+	habit_name_errors = standard_field_validator('habit', habit_name, 2)
+	if habit_name_errors == 0: 
+		return 0
+	else:
+		return habit_name_errors
+
+
 
 
 	
