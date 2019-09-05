@@ -64,7 +64,23 @@ def remove_admin():
 # HABIT SERVICES
 @app.route("/habit", methods = ["GET"]) 
 def get_habit(): 
-	pass
+	user_id = int(request.args.get('user_id'))
+	user = system.get_user(user_id)
+	habit_id = request.args.get('habit_id')
+	print('hello, ', habit_id)
+
+	if user == -1:
+		error = {'error' : 'unauthorized to make this request'}
+		return error, status.HTTP_400_BAD_REQUEST
+	if habit_id == '': 
+		return system.get_habits(user_id), status.HTTP_200_OK
+	else: 
+		if habit != -1: 
+			habit = system.get_habit(user_id, habit_id)
+			return habit.toJSON(), status.HTTP_200_OK
+		else: 
+			return {'error' : 'habit_id provided is not valid'}, status.HTTP_400_BAD_REQUEST
+
 
 @app.route("/habit", methods = ["POST"])
 def add_habit():
@@ -88,7 +104,11 @@ def add_habit():
 
 @app.route("/habit", methods = ["DELETE"])
 def remove_habit():
-	pass
+	user_id = request.args.get('user_id');
+	user = system.get_user(user_id)
+	habit_name = request.args.get('habit_name');
+	habit_id = system.get_habit_id(habit_name)
+	system.remove().....# UP TO HERE
 
 @app.route("/habit", methods = ["PUT"]) # payload decides whether check or uncheck
 def update_habit_status():

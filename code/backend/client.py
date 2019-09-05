@@ -1,5 +1,6 @@
 import pickle
 import os.path
+from classes.iHabit_system import iHabit_system
 
 def pickle_update(system):
 	pickle_out = open("system.pickle", "wb")

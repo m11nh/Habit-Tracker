@@ -1,4 +1,6 @@
 from datetime import date, timedelta
+import json
+
 class habit(object): 
 	def __init__(self, name):
 		self._name = name;

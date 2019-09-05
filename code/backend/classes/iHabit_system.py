@@ -128,7 +128,7 @@ class iHabit_system():
 	#retrieval functions
 	def get_user(self, user_id): 
 		for user in self._user_list:
-			if int(user.id) == int(user_id):
+			if float(user.id) == float(user_id):
 				return user
 		return -1
 
@@ -154,12 +154,24 @@ class iHabit_system():
 				return habit
 		return -1
 
-	def get_habits(self, user_id): 
+	def get_habit_id(self, user_id, habit_name): 
 		user = self.get_user(user_id)
 		if user == -1: 
 			return -1
+		for habit in user.habit_list:
+			if habit.name == habit_name:
+				return habit.id
+		return -1
+
+	def get_habits(self, user_id): 
+		user = self.get_user(user_id)
+		habit_list = []
+		if user == -1: 
+			return -1
 		else: 
-			return user.habit_list
+			for habit in user.habit_list: 
+				habit_list.append(habit.toJSON())
+			return {'habit_list': habit_list}
 
 
 
