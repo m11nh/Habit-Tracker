@@ -11,7 +11,7 @@ function add_habit_form(parent) {
 	hash['form'] = add_form(parent, 'add_habit_form');
 	hash['name'] = add_input_field(hash['form'], 'text', 'add_habit_name', 'habit name', '');
 	hash['button'] = add_button(hash['form'], 'button', 'add_habit_button', 'add habit');
-	hash['message'] = add_text(hash['form'], 'add_habit_message');
+	hash['message'] = add_text(hash['form'], 'add_habit_message', '');
 	return hash;
 }
 

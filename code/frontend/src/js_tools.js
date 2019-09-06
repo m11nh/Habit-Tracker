@@ -20,10 +20,13 @@ export function add_form(parent, id) {
 	return form;
 }
 
-export function add_text(parent, id) {
+export function add_text(parent, id, value) {
 	let text = document.createElement('text');
 	text.id = id;
-	parent.appendChild(text);
+	text.innerText = value;
+	if (parent != '') {
+		parent.appendChild(text);
+	}
 	return text;
 }
 
@@ -69,6 +72,16 @@ export function fetchData(url = '', data = {}, method_type = '') {
 			}, 
 		})
 	}
+	if (method_type == 'DELETE') {
+		return fetch(url, {
+			method: method_type,
+			credentials: 'same-origin',  
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			}, 
+		})
+	}
 }
 
 // creating a list
@@ -89,6 +102,33 @@ export function add_list_element(list, element) {
 	let li = document.createElement('li');
 	li.innerText = element;
 	list.appendChild(element);
+}
+
+// creating a table
+export function add_table(parent, id, table_headings = []) {
+	let table = document.createElement('table');
+	let tr = document.createElement('tr');
+
+	for (let header of table_headings) {
+		let th = document.createElement('th');
+		th.innerText = header;
+		tr.appendChild(th);
+	}
+
+	table.appendChild(tr);
+	parent.appendChild(table);
+
+	return table;
+}
+
+export function add_table_row(table, table_content = []) {
+	let tr = document.createElement('tr');
+	for (let content of table_content) {
+		let td = document.createElement('td');
+		td.appendChild(content);
+		tr.appendChild(td);
+	}
+	table.appendChild(tr);
 }
 
 

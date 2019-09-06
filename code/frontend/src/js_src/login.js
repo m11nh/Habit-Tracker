@@ -14,7 +14,7 @@ function add_login_form(parent) {
 	hash['username'] = add_input_field(hash['form'], 'text', 'login_username', 'username', '');
 	hash['password'] = add_input_field(hash['form'], 'text', 'login_password', 'password', '');
 	hash['login_button'] = add_button(hash['form'], 'button', 'login_button', 'login');
-	hash['message'] = add_text(hash['form'], 'login_message');
+	hash['message'] = add_text(hash['form'], 'login_message', '');
 
 	return hash
 }

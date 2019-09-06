@@ -3,7 +3,7 @@ from flask_api import status
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
-from validation.form_validation import validate_signup, validate_login, validate_add_habit
+from validation.form_validation import validate_signup, validate_login, validate_habit_name
 
 system = start_client()
  
@@ -66,20 +66,19 @@ def remove_admin():
 def get_habit(): 
 	user_id = int(request.args.get('user_id'))
 	user = system.get_user(user_id)
-	habit_id = request.args.get('habit_id')
-	print('hello, ', habit_id)
+	habit_name = request.args.get('habit_name')
 
 	if user == -1:
 		error = {'error' : 'unauthorized to make this request'}
 		return error, status.HTTP_400_BAD_REQUEST
-	if habit_id == '': 
+	if habit_name == '': 
 		return system.get_habits(user_id), status.HTTP_200_OK
 	else: 
 		if habit != -1: 
-			habit = system.get_habit(user_id, habit_id)
+			habit = system.get_habit(user_id, habit_name)
 			return habit.toJSON(), status.HTTP_200_OK
 		else: 
-			return {'error' : 'habit_id provided is not valid'}, status.HTTP_400_BAD_REQUEST
+			return {'error' : 'habit_name provided is not valid'}, status.HTTP_400_BAD_REQUEST
 
 
 @app.route("/habit", methods = ["POST"])
@@ -88,7 +87,7 @@ def add_habit():
 	habit_name = data['habit_name']
 	user_id = data['user_id']
 	user = system.get_user(user_id)
-	if validate_add_habit(habit_name) == 0: 
+	if validate_habit_name(habit_name) == 0: 
 		if user != -1: 
 			system.add_habit(user_id, habit_name)
 			pickle_update(system)
@@ -97,18 +96,33 @@ def add_habit():
 			error = {'error' : 'unauthorized to make this request'}
 			return error, status.HTTP_400_BAD_REQUEST
 	else: 
-		error = {'error' : validate_add_habit(habit_name)}
+		error = {'error' : validate_habit_name(habit_name)}
 		return error, status.HTTP_400_BAD_REQUEST
 
 	return 'hey';
 
 @app.route("/habit", methods = ["DELETE"])
 def remove_habit():
-	user_id = request.args.get('user_id');
+	user_id = request.args.get('user_id')
 	user = system.get_user(user_id)
-	habit_name = request.args.get('habit_name');
-	habit_id = system.get_habit_id(habit_name)
-	system.remove().....# UP TO HERE
+	habit_name = request.args.get('habit_name')
+	if validate_habit_name(habit_name) == 0:
+		if user != -1:
+			if system.get_habit(user_id, habit_name) != -1: 
+				system.remove_habit(user_id, habit_name)
+				pickle_update(system)
+				return {}, status.HTTP_200_OK
+			else: 
+				error = {'error' : 'habit name does not exist'}
+				return error, status.HTTP_400_BAD_REQUEST
+		else:
+			error = {'error' : 'unauthorized to make this request'}
+			return error, status.HTTP_400_BAD_REQUEST
+	else: 
+		error = {'error' : validate_habit_name(habit_name)}
+		return error, status.HTTP_400_BAD_REQUEST
+
+	return {}, status.HTTP_200_OK
 
 @app.route("/habit", methods = ["PUT"]) # payload decides whether check or uncheck
 def update_habit_status():

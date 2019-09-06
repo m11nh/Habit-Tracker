@@ -15,7 +15,7 @@ function add_signup_form(parent) {
 	hash['password'] = add_input_field(hash['form'], 'text', 'signup_password', 'password', '');
 	hash['email'] = add_input_field(hash['form'], 'text', 'signup_email', 'email', '');
 	hash['signup_button'] = add_button(hash['form'], 'button', 'signup_button', 'signup');
-	hash['message'] = add_text(hash['form'], 'signup_message');
+	hash['message'] = add_text(hash['form'], 'signup_message', '');
 
 	return hash
 }

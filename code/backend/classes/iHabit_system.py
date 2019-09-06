@@ -73,8 +73,8 @@ class iHabit_system():
 	def current_streak(self, user_id, habit_id):
 		return self.get_habit(user_id, habit_id).current_streak()
 
-	def remove_habit(self, user_id, habit_id): 
-		habit = self.get_habit(user_id, habit_id)
+	def remove_habit(self, user_id, habit_name): 
+		habit = self.get_habit(user_id, habit_name)
 		user = self.get_user(user_id)
 		if habit in user._habit_list:
 			user._habit_list.remove(habit)
@@ -145,22 +145,13 @@ class iHabit_system():
 		return -1
 
 
-	def get_habit(self, user_id, habit_id):
+	def get_habit(self, user_id, habit_name):
 		user = self.get_user(user_id)
 		if user == -1: 
 			return -1
 		for habit in user.habit_list: 
-			if habit.id == habit_id:
-				return habit
-		return -1
-
-	def get_habit_id(self, user_id, habit_name): 
-		user = self.get_user(user_id)
-		if user == -1: 
-			return -1
-		for habit in user.habit_list:
 			if habit.name == habit_name:
-				return habit.id
+				return habit
 		return -1
 
 	def get_habits(self, user_id): 
