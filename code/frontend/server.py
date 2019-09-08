@@ -24,7 +24,7 @@ def create_server(port, SimpleHTTPRequestHandler):
 		sys.exit(1)
 
 def create_backend_url_js_file(url):
-	f = open("src/backend_url.js", "w") 
+	f = open("/Users/minhnguyen/Desktop/Projects/Project2/code/frontend/src/js_src/backend_url.js", "w") 
 	print(f"const API_URL = '{url}';", file = f)
 	print("export default API_URL;", file = f)
 

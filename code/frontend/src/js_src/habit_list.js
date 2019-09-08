@@ -1,4 +1,4 @@
-import { fetchData, add_list, add_list_element, add_table, add_table_row, add_text } from '/src/js_tools.js'
+import { fetchData, add_list, add_list_element, add_table, add_table_row, add_text, create_square } from '/src/js_tools.js'
 
 export function habit_list(parent) {
 	let apiUrl = localStorage.getItem('API_URL');
@@ -22,7 +22,8 @@ function habit_list_fetch_handle(fetch, parent) {
 
 		for (let habit of myJson.habit_list) {
 				let text = add_text('', '',  JSON.parse(habit)._name);
-				let row_content = [text];
+				let square = create_square(JSON.parse(habit)._name, 'todays_status');
+				let row_content = [text, square];
 				add_table_row(table, row_content);
 		}
 	})

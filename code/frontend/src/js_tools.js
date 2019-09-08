@@ -131,5 +131,13 @@ export function add_table_row(table, table_content = []) {
 	table.appendChild(tr);
 }
 
+export function create_square(id, class_type) {
+	let square = document.createElement('div');
+	square.id = id;
+	square.classList.add('square');
+	square.classList.add(class_type)
+	return square; 
+}
+
 
 
