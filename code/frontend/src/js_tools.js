@@ -139,5 +139,11 @@ export function create_square(id, class_type) {
 	return square; 
 }
 
+export function checkoff(square) {
+	square.style.backgroundColor = 'green';
+}
 
+export function uncheck(square) {
+	square.style.backgroundColor = '#555';
+}
 

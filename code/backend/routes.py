@@ -68,14 +68,15 @@ def get_habit():
 	user = system.get_user(user_id)
 	habit_name = request.args.get('habit_name')
 
+
 	if user == -1:
 		error = {'error' : 'unauthorized to make this request'}
 		return error, status.HTTP_400_BAD_REQUEST
 	if habit_name == '': 
 		return system.get_habits(user_id), status.HTTP_200_OK
 	else: 
+		habit = system.get_habit(user_id, habit_name)
 		if habit != -1: 
-			habit = system.get_habit(user_id, habit_name)
 			return habit.toJSON(), status.HTTP_200_OK
 		else: 
 			return {'error' : 'habit_name provided is not valid'}, status.HTTP_400_BAD_REQUEST
