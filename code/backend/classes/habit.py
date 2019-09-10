@@ -28,9 +28,13 @@ class habit(object):
 
 	def checkoff(self):
 		self._todays_status = True
+		today = date.today()
+		self._days_executed.append(today);
 
 	def uncheck(self):
 		self._todays_status = False
+		today = date.today()
+		self._days_executed.pop(today);
 
 	def current_streak(self):
 		today = date.today()
@@ -51,7 +55,14 @@ class habit(object):
 		#while()
 
 	def toJSON(self):
-		return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+		dates = []
+		for d in self._days_executed: 
+			dates.append(d.__str__())
+		return {
+			'_name' : self._name, 
+			'_days_executed' : dates,
+			'_todays_status' : self._todays_status
+		}
 
 	def __str__(self):
 			return "{}, {}".format(self._name, self._todays_status)

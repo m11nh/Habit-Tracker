@@ -48,24 +48,24 @@ class iHabit_system():
 		user._habit_list.append(x)
 		return id
 	
-	def checkoff_habit(self, user_id, habit_id):
-		habit = self.get_habit(user_id, habit_id)
+	def checkoff_habit(self, user_id, habit_name):
+		habit = self.get_habit(user_id, habit_name)
 		if habit == -1:
 			return -1
 		# check if it has already been checked off
 		if habit.todays_status == True: 
-			return -1
+			return -2
 		else:
 		 	habit.todays_status = True
 		 	habit._days_executed.append(date.today())
 	
-	def uncheck_habit(self, user_id, habit_id):
-		habit = self.get_habit(user_id, habit_id)
+	def uncheck_habit(self, user_id, habit_name):
+		habit = self.get_habit(user_id, habit_name)
 		if habit == -1: 
 			return -1
 		# check if habit is already uncheked
 		if habit.todays_status == False:
-			return -1
+			return -2
 		else: 
 			habit.todays_status = False
 			habit._days_executed.remove(date.today())

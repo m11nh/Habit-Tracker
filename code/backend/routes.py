@@ -100,8 +100,6 @@ def add_habit():
 		error = {'error' : validate_habit_name(habit_name)}
 		return error, status.HTTP_400_BAD_REQUEST
 
-	return 'hey';
-
 @app.route("/habit", methods = ["DELETE"])
 def remove_habit():
 	user_id = request.args.get('user_id')
@@ -127,7 +125,23 @@ def remove_habit():
 
 @app.route("/habit", methods = ["PUT"]) # payload decides whether check or uncheck
 def update_habit_status():
-	pass
+	data = request.get_json()
+	user_id = data['user_id']
+	habit_name = data['habit_name']
+	checkoff = system.checkoff_habit(user_id, habit_name)
+	if checkoff == -1:
+		print('checkoff is -1');
+		return {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
+	elif checkoff == -2: 
+		system.uncheck_habit(user_id, habit_name)
+		pickle_update(system)
+		return {'habit_status' : 'unchecked'}, status.HTTP_200_OK
+	else:
+		pickle_update(system)
+		return {'habit_status' : 'checked'}, status.HTTP_200_OK
+
+	print(user_id, habit_name)
+	return 'success'
 
 # AUTH SERVICES
 @app.route("/auth/user", methods = ["POST"])

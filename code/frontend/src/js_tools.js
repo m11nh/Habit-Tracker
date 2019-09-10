@@ -51,7 +51,7 @@ export function add_button(parent, type, id, innerText) {
 
 // fetch functions
 export function fetchData(url = '', data = {}, method_type = '') {
-	if (method_type == 'POST') {
+	if (method_type == 'POST' || method_type == 'PUT') {
 		return fetch(url, {
 			method: method_type,
 			credentials: 'same-origin',  
