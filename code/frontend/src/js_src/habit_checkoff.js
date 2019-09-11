@@ -18,11 +18,15 @@ function add_habit_checkoff_event(square) {
 		let fetch = fetch_checkoff(habit_name);
 		fetch.then(response => response.json())
 		.then((myJson) => {
+			;
 			if (myJson.habit_status === 'checked') {
+				document.getElementById(`streak_${habit_name}`).innerText++
 				checkoff(square);
+				increment_streak(habit_name);
 			}
 			else {
 				uncheck(square);
+				decrement_streak(habit_name);
 			}
 		})
 	})
@@ -37,8 +41,15 @@ function fetch_checkoff(habit_name) {
 	return fetch
 }
 
-function fetch_uncheck(habit_name) {
-	
+function increment_streak(habit_name) {
+	let streak_element = document.getElementById(`streak_${habit_name}`);
+	let new_streak = Number(streak_element.innerText) + 1;
+	streak_element.innerText = newStreak;
 }
 
+function decrement_streak(habit_name) {
+	let streak_element = document.getElementById(`streak_${habit_name}`);
+	let new_streak = Number(streak_element.innerText) - 1;
+	streak_element.innerText = new_streak;
+}
 export default habit_checkoff;

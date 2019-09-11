@@ -15,7 +15,7 @@ function habit_list_fetch_handle(fetch, parent) {
 		return response.json();
 	})
 	.then((myJson) => {
-		let header = ['habit', 'todays status'];
+		let header = ['habit', 'todays status', 'streak'];
 		let table = add_table(parent, 'habit_table', header);
 
 		for (let habit of myJson.habit_list) {
@@ -23,16 +23,20 @@ function habit_list_fetch_handle(fetch, parent) {
 				let habit_name = habit._name;
 				let text = add_text('', '',  habit_name);
 				let square = create_square(habit_name, 'todays_status');
+				let current_streak = add_text('', `streak_${habit_name}`, habit._current_streak);
+
 				if (habit._todays_status == true) {
 					checkoff(square);
 				} else {
 					uncheck(square);
 				}
-				let row_content = [text, square];
+				let row_content = [text, square, current_streak];
 				add_table_row(table, row_content);
 		}
 	})
 }
+
+
 
 // return promise of status for a habit for the current
 function todays_status(habit_name) {

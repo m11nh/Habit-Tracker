@@ -58,7 +58,8 @@ class habit(object):
 		return {
 			'_name' : self._name, 
 			'_days_executed' : dates,
-			'_todays_status' : self._todays_status
+			'_todays_status' : self._todays_status,
+			'_current_streak' : self.current_streak()
 		}
 
 	def __str__(self):
