@@ -134,14 +134,15 @@ def update_habit_status():
 		return {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
 	elif checkoff == -2: 
 		system.uncheck_habit(user_id, habit_name)
-		pickle_update(system)
+		pickle_update(system) 
+		habit = system.get_habit(user_id, habit_name)
+		print(habit.toJSON())
 		return {'habit_status' : 'unchecked'}, status.HTTP_200_OK
 	else:
 		pickle_update(system)
 		return {'habit_status' : 'checked'}, status.HTTP_200_OK
 
-	print(user_id, habit_name)
-	return 'success'
+
 
 # AUTH SERVICES
 @app.route("/auth/user", methods = ["POST"])
