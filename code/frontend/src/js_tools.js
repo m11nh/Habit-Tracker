@@ -147,3 +147,35 @@ export function uncheck(square) {
 	square.style.backgroundColor = '#555';
 }
 
+export function add_div(id) {
+	let div = document.createElement('div');
+	div.id = id;
+	return div;
+}
+
+export function add_calendar(parent, month, year) {
+	let div = add_div('calendar');
+
+	let month_text = add_text(parent, '', month);
+	month_text.classList.add('month');
+	let year_text = add_text(parent, '', year);
+	year_text.classList.add('year');
+
+	div.appendChild(month_text);
+	div.appendChild(year_text);
+
+	let table = add_table(div, '', ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'])
+
+
+	parent.appendChild(div);
+}
+
+export function highlight_hover(element, color, cursor) {
+	element.addEventListener('mouseover', (event) => {
+		element.style.color = color;
+	})
+	element.addEventListener('mouseout', (event) => {
+		element.style.color = 'black';
+	})
+	element.style.cursor = cursor;
+}

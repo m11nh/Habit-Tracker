@@ -19,9 +19,9 @@ function habit_list_fetch_handle(fetch, parent) {
 		let table = add_table(parent, 'habit_table', header);
 
 		for (let habit of myJson.habit_list) {
-				console.log(habit);
 				let habit_name = habit._name;
 				let text = add_text('', '',  habit_name);
+				text.classList.add('habit_name_text');
 				let square = create_square(habit_name, 'todays_status');
 				let current_streak = add_text('', `streak_${habit_name}`, habit._current_streak);
 

@@ -4,6 +4,7 @@ import { add_logout } from '/src/js_src/logout.js'
 import { add_habit } from '/src/js_src/add_habit.js'
 import { habit_list } from '/src/js_src/habit_list.js'
 import { remove_habit } from '/src/js_src/remove_habit.js'
+import habit_progress from '/src/js_src/habit_progress.js'
 import habit_checkoff from '/src/js_src/habit_checkoff.js'
 
 export function main_init(API_URL) {
@@ -23,6 +24,7 @@ export function main_init(API_URL) {
 		let habits = habit_list(main);
 		let habit_remove = remove_habit(main);
 		let checkoff = habit_checkoff(main);
+		let progress = habit_progress(main);
 	}
 }
 

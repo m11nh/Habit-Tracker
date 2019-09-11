@@ -14,7 +14,6 @@ function habit_checkoff(parent) {
 function add_habit_checkoff_event(square) {
 	let habit_name = square.id;
 	square.addEventListener('click', (event) => {
-		console.log(square);
 		let fetch = fetch_checkoff(habit_name);
 		fetch.then(response => response.json())
 		.then((myJson) => {
