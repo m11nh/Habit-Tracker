@@ -23,9 +23,6 @@ class habit(object):
 	def todays_status(self, status):
 		self._todays_status = status
 
-	def current_streak(self):
-		pass
-
 	def checkoff(self):
 		self._todays_status = True
 		today = date.today()
