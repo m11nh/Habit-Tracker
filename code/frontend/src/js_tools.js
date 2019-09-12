@@ -1,3 +1,4 @@
+//import date
 export function hide(element) {
 	element.style.display = "none";
 }
@@ -121,9 +122,9 @@ export function add_table(parent, id, table_headings = []) {
 	return table;
 }
 
-export function add_table_row(table, table_content = []) {
+export function add_table_row(table, row_content = []) {
 	let tr = document.createElement('tr');
-	for (let content of table_content) {
+	for (let content of row_content) {
 		let td = document.createElement('td');
 		td.appendChild(content);
 		tr.appendChild(td);
@@ -154,17 +155,53 @@ export function add_div(id) {
 }
 
 export function add_calendar(parent, month, year) {
-	let div = add_div('calendar');
+	let months = [
+		 'January', 
+		 'February', 
+		 'March', 
+		 'April', 
+		 'May', 
+		 'June', 
+		 'July', 
+		 'August', 
+		 'September', 
+		 'October', 
+		 'November', 
+		 'December'
+	]
 
-	let month_text = add_text(parent, '', month);
+	let div = add_div('calendar');
+	let days_in_month = 32 - new Date(year, month, '32').getDate();
+	let starting_day = new Date(year, month, '1').getDay();
+	console.log(starting_day);
+	console.log(days_in_month);
+
+	let month_text = add_text(parent, '', months[month]);
 	month_text.classList.add('month');
 	let year_text = add_text(parent, '', year);
 	year_text.classList.add('year');
 
-	div.appendChild(month_text);
 	div.appendChild(year_text);
+	add_break(div);
+	div.appendChild(month_text);
 
-	let table = add_table(div, '', ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'])
+	let table = add_table(div, '', ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'])
+	
+	let row_content = [];
+	// month beginning offset: 
+	for (let i = 0; i < starting_day; i++) {
+		let empty_text = add_text('', '', '');
+		row_content.push(empty_text);
+	}
+	for (let i = 1 + starting_day; i <= days_in_month + starting_day; i++) {
+		let day_number = i - starting_day; 
+		let day_text = add_text('', '', day_number);
+		row_content.push(day_text);
+		if (i % 7 === 0 || i === days_in_month + starting_day) {
+			add_table_row(table, row_content);
+			row_content = [];
+		}
+	}
 
 
 	parent.appendChild(div);

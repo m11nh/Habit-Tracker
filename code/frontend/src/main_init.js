@@ -23,8 +23,13 @@ export function main_init(API_URL) {
 		let create_habit = add_habit(main);
 		let habits = habit_list(main);
 		let habit_remove = remove_habit(main);
-		let checkoff = habit_checkoff(main);
-		let progress = habit_progress(main);
+
+		let observer = new MutationObserver(() => {
+			let checkoff = habit_checkoff(main);
+			let progress = habit_progress(main);
+			observer.disconnect();
+		})
+		observer.observe(main, { attributes: false, childList: true, subtree: true });
 	}
 }
 

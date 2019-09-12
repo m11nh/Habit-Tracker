@@ -1,14 +1,9 @@
 import { checkoff, uncheck, fetchData } from '/src/js_tools.js'
 function habit_checkoff(parent) {
-	let observer = new MutationObserver(() => {
-		let todays_status_squares = document.getElementsByClassName('todays_status');
-		for (let square of todays_status_squares) {
-			add_habit_checkoff_event(square);
-		}
-		observer.disconnect();
-	})
-	observer.observe(parent, { attributes: false, childList: true, subtree: true });
-
+	let todays_status_squares = document.getElementsByClassName('todays_status');
+	for (let square of todays_status_squares) {
+		add_habit_checkoff_event(square);
+	}
 }
 
 function add_habit_checkoff_event(square) {
@@ -19,7 +14,6 @@ function add_habit_checkoff_event(square) {
 		.then((myJson) => {
 			;
 			if (myJson.habit_status === 'checked') {
-				document.getElementById(`streak_${habit_name}`).innerText++
 				checkoff(square);
 				increment_streak(habit_name);
 			}
@@ -43,7 +37,7 @@ function fetch_checkoff(habit_name) {
 function increment_streak(habit_name) {
 	let streak_element = document.getElementById(`streak_${habit_name}`);
 	let new_streak = Number(streak_element.innerText) + 1;
-	streak_element.innerText = newStreak;
+	streak_element.innerText = new_streak;
 }
 
 function decrement_streak(habit_name) {
