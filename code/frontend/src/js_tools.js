@@ -154,6 +154,20 @@ export function add_div(id) {
 	return div;
 }
 
+export function add_next_arrow(id) {
+	let next_arrow = add_div(id);
+	next_arrow.innerText = '❯';
+	next_arrow.classList.add('next_arrow');
+	return next_arrow; 
+}
+
+export function add_prev_arrow(id) {
+	let prev_arrow = add_div(id);
+	prev_arrow.innerText = '❮';
+	prev_arrow.classList.add('prev_arrow');
+	return prev_arrow;
+}
+
 export function add_calendar(parent, month, year) {
 	let months = [
 		 'January', 
@@ -176,14 +190,17 @@ export function add_calendar(parent, month, year) {
 	console.log(starting_day);
 	console.log(days_in_month);
 
-	let month_text = add_text(parent, '', months[month]);
+	let month_text = add_text(parent, 'month', months[month]);
 	month_text.classList.add('month');
-	let year_text = add_text(parent, '', year);
+	let year_text = add_text(parent, 'year', year);
 	year_text.classList.add('year');
+
+	let next_arrow = add_next_arrow('next_arrow');
+	let prev_arrow = add_prev_arrow('prev_arrow');
 
 	div.appendChild(year_text);
 	add_break(div);
-	div.appendChild(month_text);
+	add_table_row(div, [prev_arrow, month_text, next_arrow]);
 
 	let table = add_table(div, '', ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'])
 	
@@ -195,16 +212,16 @@ export function add_calendar(parent, month, year) {
 	}
 	for (let i = 1 + starting_day; i <= days_in_month + starting_day; i++) {
 		let day_number = i - starting_day; 
-		let day_text = add_text('', '', day_number);
+		let day_text = add_text('', `${day_number}-${month}-${year}`, day_number);
 		row_content.push(day_text);
 		if (i % 7 === 0 || i === days_in_month + starting_day) {
 			add_table_row(table, row_content);
 			row_content = [];
 		}
 	}
-
-
 	parent.appendChild(div);
+
+	return { 'calendar' : div, 'prev_arrow' : prev_arrow, 'next_arrow' : next_arrow }
 }
 
 export function highlight_hover(element, color, cursor) {

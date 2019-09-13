@@ -5,14 +5,28 @@
 }
 
 /* stuff for calendar */
-.year {
-
+#year {
+	padding-left: 65px;
 }
 
-.month {
-
+#month {
+	padding-left: 11px;
 }
 
 .day {
 	
+}
+
+.next_arrow {
+	padding-left: 10px;
+}
+
+.prev_arrow {
+	padding-left: 40px;
+}
+
+.active {
+	padding: 1px;
+	background: #1abc9c;
+	color: white;
 }
