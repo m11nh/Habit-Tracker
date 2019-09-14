@@ -1,12 +1,13 @@
 import { checkoff, uncheck, fetchData } from '/src/js_tools.js'
+import { update_calendar } from '/src/js_src/habit_progress.js'
 function habit_checkoff(parent) {
 	let todays_status_squares = document.getElementsByClassName('todays_status');
 	for (let square of todays_status_squares) {
-		add_habit_checkoff_event(square);
+		add_habit_checkoff_event(parent, square);
 	}
 }
 
-function add_habit_checkoff_event(square) {
+function add_habit_checkoff_event(parent, square) {
 	let habit_name = square.id;
 	square.addEventListener('click', (event) => {
 		let fetch = fetch_checkoff(habit_name);
@@ -16,10 +17,12 @@ function add_habit_checkoff_event(square) {
 			if (myJson.habit_status === 'checked') {
 				checkoff(square);
 				increment_streak(habit_name);
+				update_calendar(parent, habit_name);
 			}
 			else {
 				uncheck(square);
 				decrement_streak(habit_name);
+				update_calendar(parent, habit_name);
 			}
 		})
 	})

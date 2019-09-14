@@ -1,4 +1,3 @@
-//import date
 export function hide(element) {
 	element.style.display = "none";
 }
@@ -168,7 +167,7 @@ export function add_prev_arrow(id) {
 	return prev_arrow;
 }
 
-export function add_calendar(parent, month, year) {
+export function add_calendar(parent, month, year, days_executed = []) {
 	let months = [
 		 'January', 
 		 'February', 
@@ -212,16 +211,32 @@ export function add_calendar(parent, month, year) {
 	}
 	for (let i = 1 + starting_day; i <= days_in_month + starting_day; i++) {
 		let day_number = i - starting_day; 
-		let day_text = add_text('', `${day_number}-${month}-${year}`, day_number);
+		let day_text = add_text('', `${year}-${month}-${day_number}`, day_number);
+		let date = date_converter(year, month, day_number);
+
+		if (days_executed.includes(date)) {
+			day_text.classList.add('active');
+		}
 		row_content.push(day_text);
 		if (i % 7 === 0 || i === days_in_month + starting_day) {
 			add_table_row(table, row_content);
 			row_content = [];
 		}
 	}
+
 	parent.appendChild(div);
 
 	return { 'calendar' : div, 'prev_arrow' : prev_arrow, 'next_arrow' : next_arrow }
+}
+
+export function date_converter(year, month, day) {
+	if (month < 10) {
+		month = `0${month + 1}`;
+	}
+	if (day < 10) {
+		day = `0${day}`;
+	}
+	return `${year}-${month}-${day}`;
 }
 
 export function highlight_hover(element, color, cursor) {
