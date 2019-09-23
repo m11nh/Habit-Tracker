@@ -164,6 +164,13 @@ class iHabit_system():
 				habit_list.append(habit.toJSON())
 			return {'habit_list': habit_list}
 
+	# sets the attribute todays_status of a habit to false
+	def todays_status_to_false(self, user_id, habit_name):
+		habit = self.get_habit(user_id, habit_name)
+		if habit == -1:
+			return -1
+		habit.todays_status = False;
+
 
 
 

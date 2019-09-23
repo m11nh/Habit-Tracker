@@ -125,22 +125,34 @@ def remove_habit():
 
 @app.route("/habit", methods = ["PUT"]) # payload decides whether check or uncheck
 def update_habit_status():
+	#actions: checkoff, uncheck , update_todays_status
 	data = request.get_json()
+	action = data['action']
 	user_id = data['user_id']
 	habit_name = data['habit_name']
 	checkoff = system.checkoff_habit(user_id, habit_name)
-	if checkoff == -1:
-		print('checkoff is -1');
-		return {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
-	elif checkoff == -2: 
-		system.uncheck_habit(user_id, habit_name)
-		pickle_update(system) 
-		habit = system.get_habit(user_id, habit_name)
-		print(habit.toJSON())
-		return {'habit_status' : 'unchecked'}, status.HTTP_200_OK
-	else:
-		pickle_update(system)
-		return {'habit_status' : 'checked'}, status.HTTP_200_OK
+	if action == 'check':
+		if checkoff == -1:
+			print('checkoff is -1');
+			return {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
+		elif checkoff == -2: 
+			system.uncheck_habit(user_id, habit_name)
+			pickle_update(system) 
+			habit = system.get_habit(user_id, habit_name)
+			print(habit.toJSON())
+			return {'habit_status' : 'unchecked'}, status.HTTP_200_OK
+		else:
+			pickle_update(system)
+			return {'habit_status' : 'checked'}, status.HTTP_200_OK
+			
+	elif action == 'todays_status_to_false':
+		change_todays_status = system.todays_status_to_false(user_id, habit_name)
+		if change_todays_status == -1: 
+			return  {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
+		else: 
+			pickle_update(system)
+			return {'habit_status' : 'todays status now false'}, status.HTTP_200_OK
+
 
 
 

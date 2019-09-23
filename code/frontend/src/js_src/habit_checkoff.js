@@ -32,7 +32,7 @@ function fetch_checkoff(habit_name) {
 	let apiUrl = localStorage.getItem('API_URL');
 	let url = `${apiUrl}habit`;
 	let user_id = localStorage.getItem('auth_id');
-	let data = { 'habit_name' : habit_name, 'user_id' : user_id }
+	let data = { 'habit_name' : habit_name, 'user_id' : user_id, 'action': 'check' }
 	let fetch = fetchData(url, data, 'PUT')
 	return fetch
 }
