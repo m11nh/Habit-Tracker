@@ -15,7 +15,7 @@ def get_user():
 	user = system.get_user(user_id)
 	if (user != -1):
 		return user.toJSON()
-
+ 
 @app.route("/user", methods = ["POST"])
 def add_user():
 	data = request.get_json()

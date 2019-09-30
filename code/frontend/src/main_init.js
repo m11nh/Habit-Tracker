@@ -6,11 +6,22 @@ import { habit_list } from '/src/js_src/habit_list.js'
 import { remove_habit } from '/src/js_src/remove_habit.js'
 import habit_progress from '/src/js_src/habit_progress.js'
 import habit_checkoff from '/src/js_src/habit_checkoff.js'
+import { fetchData } from  '/src/js_tools.js'
 
 export function main_init(API_URL) {
 	// set API_URL 
 	localStorage.setItem('API_URL', API_URL);
-	localStorage.setItem('todays_date', new Date().toDateString());
+	if (! localStorage.getItem('todays_date')) {
+		//set the date
+		localStorage.setItem('todays_date', new Date().toDateString());
+	}
+
+	// if the stored date is not valid update it, and change habit_todays_status to false
+	if (new Date().toDateString() != localStorage.getItem('todays_date')) {
+		localStorage.setItem('todays_date', new Date().toDateString());
+		// update using fetch (get list of habits, update each habit)
+	}
+
 	let main = document.getElementById('main');
 	let auth_id = localStorage.getItem('auth_id');
 
@@ -30,17 +41,17 @@ export function main_init(API_URL) {
 			let progress = habit_progress(main);
 			//refactor code here (fixing bug where habit status is still true after new day occurs)
 			setInterval(() => {
+				//This would be live update + perhaps of getting habit names from the html, i could use fetch to get habits from the user data
 				if (new Date().toDateString() != localStorage.getItem('todays_date')) {
 					// change habits._todays_status == True to False
 					//only can be fixed if i update the /habit PUT route in routes.py, to take in a query or data body
-
-					// implement the fetch -> todays_status_to_false
-
-
-					console.log('hey bro');
+					let todays_status_squares = document.getElementsByClassName('todays_status');
+					for (let square of todays_status_squares) {
+						let habit_name = square.id;
+						todays_status_to_false(square.id);
+					}
 				}
-				console.log('hey bro');
-			}, 10000);
+			}, 100000);
 
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -50,9 +61,16 @@ export function main_init(API_URL) {
 	}
 }
 
-function todays_status_to_false () {
-
+function todays_status_to_false (habit_name) {
+	let apiUrl = localStorage.getItem('API_URL');
+	let url = `${apiUrl}habit`;
+	let user_id = localStorage.getItem('auth_id');
+	let data = { 'habit_name' : habit_name, 'user_id' : user_id, 'action': 'todays_status_to_false' }
+	let fetch = fetchData(url, data, 'PUT')
+	return fetch
 }
+
+
 
 
 
