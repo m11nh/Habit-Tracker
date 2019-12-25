@@ -3,7 +3,7 @@ import React from "react"
 function SignupComponent(props) {
 	return(
 		<div>
-			<button onClick={props.formVisibleClick}> Create New Account </button>
+			<button onClick={props.changeFormVisibility}> Create New Account </button>
 			<form 
 				style={{display: props.formVisibility}}
 				onSubmit={props.handleSubmit}

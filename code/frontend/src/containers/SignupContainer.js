@@ -11,9 +11,11 @@ function SignupContainer() {
 	const [ errors, setErrors ] = useState("")
 
 	// expands and retracts singup form when user clicks on Create New Account
-	function formVisibleClick() {
+	function changeFormVisibility() {
 		setFormVisibility(prevDisplayStatus => prevDisplayStatus === "none" ? "" : "none")
-		console.log(formVisibility)
+		setUsername("")
+		setPassword("")
+		setEmail("")
 	}
 
 	// handles changes in form values
@@ -44,7 +46,7 @@ function SignupContainer() {
 			formVisibility={formVisibility}
 			errors={errors}
 
-			formVisibleClick={formVisibleClick} 
+			changeFormVisibility={changeFormVisibility} 
 			changeUsername={changeUsername}
 			changePassword={changePassword}
 			changeEmail={changeEmail}

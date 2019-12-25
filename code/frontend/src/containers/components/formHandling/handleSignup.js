@@ -11,7 +11,6 @@ function handleSignup(username, password, email, API, setErrors) {
 	let fetch = fetchData(url, data, 'POST');
 	fetch
 	.then((response) => {
-		alert("hey")
 		response = {'status' :  response.status, 'myJson' : response.json()};
 		return response
 	})
@@ -23,7 +22,6 @@ function handleSignup(username, password, email, API, setErrors) {
 			})
 		}
 		else {
-			console.log(response)
 			response['myJson']
 			.then((myJson) => {
 				setErrors(myJson.error)
