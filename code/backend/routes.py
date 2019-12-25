@@ -81,7 +81,6 @@ def get_habit():
 		else: 
 			return {'error' : 'habit_name provided is not valid'}, status.HTTP_400_BAD_REQUEST
 
-
 @app.route("/habit", methods = ["POST"])
 def add_habit():
 	data = request.get_json()
