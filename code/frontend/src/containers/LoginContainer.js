@@ -20,6 +20,7 @@ function LoginContainer() {
 		setFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
 		setUsername("")
 		setPassword("")
+		setErrors("")
 	}
 
 	function handleSubmit(event) {

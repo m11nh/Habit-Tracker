@@ -16,6 +16,7 @@ function SignupContainer() {
 		setUsername("")
 		setPassword("")
 		setEmail("")
+		setErrors("")
 	}
 
 	// handles changes in form values
