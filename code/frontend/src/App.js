@@ -5,7 +5,7 @@ import SignupContainer from './containers/SignupContainer'
 import LoginContainer from './containers/LoginContainer'
 import Logout from './containers/Logout'
 import AddHabit from './containers/AddHabit'
-import CheckOffHabit from './containers/CheckOffHabit'
+import HabitList from './containers/CheckOffHabit'
 
 function App() {
  	localStorage.setItem("API", "http://127.0.0.1:5000/")
@@ -15,7 +15,7 @@ function App() {
 			<div>
 				<Logout />
 				<AddHabit />
-				<CheckOffHabit />
+				<HabitList />
 			</div>
 		);
 	}

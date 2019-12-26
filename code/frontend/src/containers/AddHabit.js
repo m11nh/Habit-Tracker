@@ -6,10 +6,12 @@ function AddHabit() {
 	const [formVisibility, setFormVisibility] = useState("")
 	const [ habitName, setHabitName ] = useState("")
 	const [ errors, setErrors] = useState("")
+	const [ habitAdded, setHabitAdded ] = useState("") 
 
 	function changeFormVisibility(event) {
 		setFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
 		setHabitName("")
+		setErrors("")
 	}
 
 	function changeHabitName(event) {
@@ -17,7 +19,7 @@ function AddHabit() {
 	}
 
 	function handleSubmit(event) {
-		handleAddHabit(habitName, setErrors)
+		handleAddHabit(habitName, setErrors, setHabitAdded)
 		event.preventDefault()
 
 	}
