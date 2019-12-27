@@ -4,10 +4,10 @@ function AddHabitComponent(props) {
 	return (
 		<div>
 			<button onClick={props.changeFormVisibility}>Create New Habit</button>
-			<form style={{display: props.formVisibility}} onSubmit={props.handleSubmit}>
-				<input placeholder="Habit Name" value={props.habitName} onChange={props.changeHabitName}/>
+			<form style={{display: props.formVisibility}} onSubmit={props.handleAddSubmit}>
+				<input placeholder="Habit Name" value={props.habitAddName} onChange={props.changeHabitAddName}/>
 				<button> create </button>
-				<p>{props.errors}</p>
+				<p>{props.addErrors}</p>
 			</form>
 		</div>
 	)	

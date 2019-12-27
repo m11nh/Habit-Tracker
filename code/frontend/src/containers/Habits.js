@@ -1,31 +1,45 @@
 import React, {useState, useEffect} from "react"
 import AddHabitComponent from "./components/AddHabitComponent"
+import RemoveHabitComponent from "./components/RemoveHabitComponent"
 import handleAddHabit from "./components/formHandling/handleAddHabit"
+import handleRemoveHabit from "./components/formHandling/handleRemoveHabit"
 import fetchData from "./components/formHandling/fetchTools"
 
 export function Habits() {
 	// add habit
-	const [formVisibility, setFormVisibility] = useState("")
-	const [ habitName, setHabitName ] = useState("")
-	const [ errors, setErrors] = useState("")
+	const [formVisibility, setFormVisibility ] = useState("")
+
+	const [ habitAddName, setHabitAddName ] = useState("")
+	const [ addErrors, setAddErrors ] = useState("")
 	const [ habitAdded, setHabitAdded ] = useState("") 
+
+	const [ habitRemoveName, setHabitRemoveName ] = useState("")
+	const [ removeErrors, setRemoveErrors ] = useState("")
+	const [ habitRemoved, setHabitRemoved ] = useState("")
+
 
 	// habit list
 	const [ userHabits, setUserHabits ] = useState()
 
 	function changeFormVisibility(event) {
 		setFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
-		setHabitName("")
-		setErrors("")
 	}
 
-	function changeHabitName(event) {
-		setHabitName(event.target.value)
+	function changeHabitAddName(event) {
+		setHabitAddName(event.target.value)
 	}
 
-	function handleSubmit(event) {
-		handleAddHabit(habitName, setErrors, setHabitAdded, setHabitName)
+	function changeHabitRemoveName(event) {
+		setHabitRemoveName(event.target.value)
+	}
+
+	function handleAddSubmit(event) {
+		handleAddHabit(habitAddName, setAddErrors, setHabitAdded, setHabitAddName)
 		event.preventDefault()
+	}
+
+	function handleRemoveSubmit(event) {
+		handleRemoveHabit(habitRemoveName, setRemoveErrors, setHabitRemoved, setHabitRemoveName)
 	}
 
 	useEffect(() => {
@@ -38,12 +52,23 @@ export function Habits() {
 				changeFormVisibility={changeFormVisibility}
 				formVisibility={formVisibility}
 
-				habitName={habitName}
-				changeHabitName={changeHabitName}
+				habitAddName={habitAddName}
+				changeHabitAddName={changeHabitAddName}
 
-				handleSubmit={handleSubmit}
+				handleAddSubmit={handleAddSubmit}
 
-				errors={errors}
+				addErrors={addErrors}
+			/>
+			<RemoveHabitComponent
+				changeFormVisibility={changeFormVisibility}
+				formVisibility={formVisibility}
+
+				habitRemoveName={habitRemoveName}
+				changeHabitRemoveName={changeHabitRemoveName}
+
+				handleRemoveSubmit={handleRemoveSubmit}
+
+				removeErrors={removeErrors}
 			/>
 			{userHabits}	
 		</div>
