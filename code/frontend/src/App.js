@@ -4,8 +4,7 @@ import './App.css';
 import SignupContainer from './containers/SignupContainer'
 import LoginContainer from './containers/LoginContainer'
 import Logout from './containers/Logout'
-import AddHabit from './containers/AddHabit'
-import HabitList from './containers/CheckOffHabit'
+import { Habits }from './containers/Habits'
 
 function App() {
  	localStorage.setItem("API", "http://127.0.0.1:5000/")
@@ -14,8 +13,7 @@ function App() {
 		return (
 			<div>
 				<Logout />
-				<AddHabit />
-				<HabitList />
+				<Habits />
 			</div>
 		);
 	}

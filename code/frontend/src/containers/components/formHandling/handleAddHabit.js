@@ -1,7 +1,7 @@
 import React from "react"
 import fetchData from "./fetchTools"
 
-function handleAddHabit(habitName, setErrors, setHabitAdded) {
+function handleAddHabit(habitName, setErrors, setHabitAdded, setHabitName) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let userName = localStorage.getItem("userName")
@@ -21,8 +21,10 @@ function handleAddHabit(habitName, setErrors, setHabitAdded) {
 		if (response['status'] === 200) {
 			response['myJson']
 			.then((myJson) => {
-				alert("successfully added")
+				setErrors("successfully added")
+				setHabitName("")
 				setHabitAdded(habitName)
+				localStorage.setItem("habitAdded", habitName)
 			})
 		}
 		else {
