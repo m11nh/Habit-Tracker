@@ -40,6 +40,7 @@ export function Habits() {
 
 	function handleRemoveSubmit(event) {
 		handleRemoveHabit(habitRemoveName, setRemoveErrors, setHabitRemoved, setHabitRemoveName)
+		event.preventDefault()
 	}
 
 	useEffect(() => {
