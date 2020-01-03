@@ -92,7 +92,7 @@ def add_habit():
 			system.add_habit(user_id, habit_name)
 			pickle_update(system)
 			return {}, status.HTTP_200_OK
-		else: 
+		else:  
 			error = {'error' : 'unauthorized to make this request'}
 			return error, status.HTTP_400_BAD_REQUEST
 	else: 

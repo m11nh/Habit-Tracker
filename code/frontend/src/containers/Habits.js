@@ -25,6 +25,17 @@ export function Habits() {
 		setFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
 	}
 
+	/*
+	function changeHabitAddFormVisibility(event) {
+		setHabitAddFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
+	}
+
+	function changeHabitRemoveFormVisibility(event) {
+		setHabitRemoveFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
+	}
+	*/
+
+
 	function changeHabitAddName(event) {
 		setHabitAddName(event.target.value)
 	}
@@ -45,7 +56,7 @@ export function Habits() {
 
 	useEffect(() => {
 		getUserHabits(setUserHabits)
-	}, [habitAdded])
+	}, [habitAdded, habitRemoved])
 
 	return (
 		<div>

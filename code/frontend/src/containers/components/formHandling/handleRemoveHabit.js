@@ -5,13 +5,10 @@ function handleRemoveHabit(habitName, setErrors, setHabitAdded, setHabitName) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let userName = localStorage.getItem("userName")
+
 	
-	let url = `${API}habit`
-	let data = {
-		'habit_name': habitName,
-		'user_id': userId
-	}
-	let fetch = fetchData(url, data, 'POST');
+	let url = `${API}habit?habit_name=${habitName}&user_id=${userId}`
+	let fetch = fetchData(url, {}, 'DELETE');
 	fetch
 	.then((response) => {
 		response = {'status' :  response.status, 'myJson' : response.json()};
@@ -21,7 +18,7 @@ function handleRemoveHabit(habitName, setErrors, setHabitAdded, setHabitName) {
 		if (response['status'] === 200) {
 			response['myJson']
 			.then((myJson) => {
-				setErrors("successfully added")
+				setErrors("successfully removed")
 				setHabitName("")
 				setHabitAdded(habitName)
 				localStorage.setItem("habitAdded", habitName)
