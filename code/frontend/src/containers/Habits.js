@@ -7,7 +7,8 @@ import fetchData from "./components/formHandling/fetchTools"
 
 export function Habits() {
 	// add habit
-	const [formVisibility, setFormVisibility ] = useState("")
+	const [habitAddFormVisibility, setHabitAddFormVisibility] = useState("")
+	const [habitRemoveFormVisibility, setHabitRemoveFormVisibility] = useState("")
 
 	const [ habitAddName, setHabitAddName ] = useState("")
 	const [ addErrors, setAddErrors ] = useState("")
@@ -20,20 +21,17 @@ export function Habits() {
 
 	// habit list
 	const [ userHabits, setUserHabits ] = useState()
-
-	function changeFormVisibility(event) {
-		setFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
-	}
-
-	/*
+	
 	function changeHabitAddFormVisibility(event) {
 		setHabitAddFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
+		setAddErrors("")
 	}
 
 	function changeHabitRemoveFormVisibility(event) {
 		setHabitRemoveFormVisibility(prevFormVisibility => prevFormVisibility === "" ? "none" : "")
+		setRemoveErrors("")
 	}
-	*/
+	
 
 
 	function changeHabitAddName(event) {
@@ -61,8 +59,8 @@ export function Habits() {
 	return (
 		<div>
 			<AddHabitComponent 
-				changeFormVisibility={changeFormVisibility}
-				formVisibility={formVisibility}
+				changeFormVisibility={changeHabitAddFormVisibility}
+				formVisibility={habitAddFormVisibility}
 
 				habitAddName={habitAddName}
 				changeHabitAddName={changeHabitAddName}
@@ -72,8 +70,8 @@ export function Habits() {
 				addErrors={addErrors}
 			/>
 			<RemoveHabitComponent
-				changeFormVisibility={changeFormVisibility}
-				formVisibility={formVisibility}
+				changeFormVisibility={changeHabitRemoveFormVisibility}
+				formVisibility={habitRemoveFormVisibility}
 
 				habitRemoveName={habitRemoveName}
 				changeHabitRemoveName={changeHabitRemoveName}
