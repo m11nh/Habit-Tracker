@@ -4,6 +4,8 @@ import RemoveHabitComponent from "./components/RemoveHabitComponent"
 import handleAddHabit from "./components/formHandling/handleAddHabit"
 import handleRemoveHabit from "./components/formHandling/handleRemoveHabit"
 import fetchData from "./components/formHandling/fetchTools"
+import HabitComponent from "./components/HabitComponent"
+import { getDate }from "./TimeDateContainer"
 
 export function Habits() {
 	// add habit
@@ -18,6 +20,14 @@ export function Habits() {
 	const [ removeErrors, setRemoveErrors ] = useState("")
 	const [ habitRemoved, setHabitRemoved ] = useState("")
 
+	const [ habitChecked, setHabitChecked ] = useState(0)
+
+	const [ date, setDate ] = useState(getDate)
+
+	setInterval(() => {
+		// 
+		setDate(10)
+	}, 10000)
 
 	// habit list
 	const [ userHabits, setUserHabits ] = useState()
@@ -53,8 +63,13 @@ export function Habits() {
 	}
 
 	useEffect(() => {
-		getUserHabits(setUserHabits)
-	}, [habitAdded, habitRemoved])
+		getUserHabits(setUserHabits, setHabitChecked)
+		console.log(habitChecked)
+	}, [habitAdded, habitRemoved, habitChecked])
+
+	useEffect(() => {
+		// go through habit list and uncheck if its already checked
+	}, [date])
 
 	return (
 		<div>
@@ -86,14 +101,13 @@ export function Habits() {
 	)
 }
 
-export function getUserHabits(setUserHabits) {
+export function getUserHabits(setUserHabits, setHabitChecked) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let habit_name = ''
 	let url = `${API}habit?habit_name=${habit_name}&user_id=${userId}`
 
-	let fetch = fetchData(url, {}, 
-	 "GET")
+	let fetch = fetchData(url, {}, "GET")
 
 	fetch
 	.then((response) => {
@@ -108,7 +122,12 @@ export function getUserHabits(setUserHabits) {
 				setUserHabits(myJson.habit_list.map((habit) => {
 					console.log(habit)
 					return (
-						<p> {habit._name} </p>
+						<HabitComponent 
+							name={habit._name}
+							status={habit._todays_status}
+							checkOff={habitCheckOff}
+							setHabitChecked={setHabitChecked}
+						/>
 					)
 				}))
 			})
@@ -121,6 +140,23 @@ export function getUserHabits(setUserHabits) {
 		}
 	})
 }
+
+function habitCheckOff(habitName, setHabitChecked) {
+	console.log(habitName)
+	let API = localStorage.getItem("API")
+	let userId = localStorage.getItem("userId")
+	let url = `${API}habit`;
+	let data = { 'habit_name' : habitName, 'user_id' : userId, 'action': 'check' }
+
+	let fetch = fetchData(url, data, 'PUT')
+
+	fetch.then((response) => {
+		console.log(response.status)
+	})
+
+	setHabitChecked(prevHabitChecked => prevHabitChecked + 1)
+}
+
 
 
 

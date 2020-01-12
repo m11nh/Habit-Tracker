@@ -1,0 +1,28 @@
+date		| time	| activity			| comments
+23/12/19	| 100m	| coding			| coding up the signup user-story in the frontend
+24/12/19	| 100m	| coding			| completed the signup functionality
+25/12/19	| 100m 	| coding			| completed login, working on logout
+26/12/19	| 100m 	| coding			| completed login, create new habit
+27/12/19	| 100m 	| coding			| working on habitList being displayed properly
+28/12/19	| 100m 	| coding/learning	| working on remove habit, completed habit list
+31/12/19	| 5m	| coding			| working on remove habit
+3/1/20		| 25m	| coding			| cleaning up remove habit
+11/1/20		| 100m 	| coding			| completed remove habit, working on checkoff habit
+12/1/20		| 100m 	| coding 			| added time component, working on checkoff reset
+
+Current objective: 
+- complete US5 - As a user, I want to be able to check off a habit I’ve completed on the current date. 
+- make the habits uncheck themselves when a new day begins (2 cases)
+
+
+Long term plan
+- finish doing frontend and backend
+- learn html/css properly
+- style my app
+
+Other
+- implement method security (more encryption involved from api calls)
+- make user unable to add habits that already exists (changes to backend)
+- make things like "successfully removed" indicator only show for a few seconds then disappear 
+- allow anything except empty for add/remove habit field validation
+

@@ -2,7 +2,7 @@ import React from "react"
 
 function HabitComponent(props) {
 	return (
-			<li onClick={() => props.checkOff(props.name)} style={{color: props.status === true ? "green" : "black"}}> {props.name} </li>
+			<li onClick={() => props.checkOff(props.name, props.setHabitChecked)} style={{color: props.status === true ? "green" : "black"}}> {props.name} </li>
 	)
 }
 

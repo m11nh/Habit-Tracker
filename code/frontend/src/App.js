@@ -4,6 +4,7 @@ import './App.css';
 import SignupContainer from './containers/SignupContainer'
 import LoginContainer from './containers/LoginContainer'
 import Logout from './containers/Logout'
+import { TimeDateContainer } from './containers/TimeDateContainer'
 import { Habits }from './containers/Habits'
 
 function App() {
@@ -13,7 +14,9 @@ function App() {
 		return (
 			<div>
 				<Logout />
+				<TimeDateContainer />
 				<Habits />
+
 			</div>
 		);
 	}
