@@ -25,9 +25,8 @@ export function Habits() {
 	const [ date, setDate ] = useState(getDate)
 
 	setInterval(() => {
-		// 
-		setDate(10)
-	}, 10000)
+		setDate(getDate)
+	}, 100000)
 
 	// habit list
 	const [ userHabits, setUserHabits ] = useState()
@@ -65,11 +64,7 @@ export function Habits() {
 	useEffect(() => {
 		getUserHabits(setUserHabits, setHabitChecked)
 		console.log(habitChecked)
-	}, [habitAdded, habitRemoved, habitChecked])
-
-	useEffect(() => {
-		// go through habit list and uncheck if its already checked
-	}, [date])
+	}, [habitAdded, habitRemoved, habitChecked, date])
 
 	return (
 		<div>
@@ -120,7 +115,8 @@ export function getUserHabits(setUserHabits, setHabitChecked) {
 			.then((myJson) => {
 				// display list of habits
 				setUserHabits(myJson.habit_list.map((habit) => {
-					console.log(habit)
+					// todaysStatusCheck
+					todaysStatusCheck(habit, setHabitChecked)
 					return (
 						<HabitComponent 
 							name={habit._name}
@@ -139,6 +135,31 @@ export function getUserHabits(setUserHabits, setHabitChecked) {
 			})
 		}
 	})
+}
+
+function todaysStatusCheck(habit, setHabitChecked) {
+	let dateToday = new Date().toISOString().substring(0, 10);
+	let recentDateHabit = habit._days_executed[habit._days_executed.length - 1]
+	console.log(habit)
+	if (habit._days_executed.length > 0) {
+		if (dateToday != recentDateHabit && habit._todays_status === true) {
+			console.log(habit._days_executed[habit._days_executed.length - 1])
+			// change todays_status to false
+			let API = localStorage.getItem("API")
+			let userId = localStorage.getItem("userId")
+			let url = `${API}habit`;
+			let data = { 'habit_name' : habit._name, 'user_id' : userId, 'action': 'todays_status_to_false' }
+
+			let fetch = fetchData(url, data, 'PUT')
+
+			fetch.then((response) => {
+				console.log(response.status)
+			})
+
+			setHabitChecked(prevHabitChecked => prevHabitChecked + 1)
+
+		}
+	}
 }
 
 function habitCheckOff(habitName, setHabitChecked) {
