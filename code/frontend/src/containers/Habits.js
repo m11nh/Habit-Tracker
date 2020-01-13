@@ -5,6 +5,7 @@ import handleAddHabit from "./components/formHandling/handleAddHabit"
 import handleRemoveHabit from "./components/formHandling/handleRemoveHabit"
 import fetchData from "./components/formHandling/fetchTools"
 import HabitComponent from "./components/HabitComponent"
+import CalendarComponent from "./components/CalendarComponent"
 import { getDate }from "./TimeDateContainer"
 
 export function Habits() {
@@ -91,6 +92,10 @@ export function Habits() {
 				removeErrors={removeErrors}
 			/>
 			{userHabits}	
+			<CalendarComponent
+				year={2020}
+				month={11}
+			/>
 		</div>
 
 	)
@@ -121,6 +126,7 @@ export function getUserHabits(setUserHabits, setHabitChecked) {
 						<HabitComponent 
 							name={habit._name}
 							status={habit._todays_status}
+							streak={habit._current_streak}
 							checkOff={habitCheckOff}
 							setHabitChecked={setHabitChecked}
 						/>
