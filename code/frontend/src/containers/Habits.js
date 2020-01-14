@@ -25,6 +25,12 @@ export function Habits() {
 
 	const [ date, setDate ] = useState(getDate)
 
+	// stuff for the calendar
+	const [ calendarDate, setCalendarDate ] = useState(getCalendarDate())
+	const [ calendarHabit, setCalendarHabit ] = useState("")
+	const [ calendarDaysExecuted, setCalendarDaysExecuted ] = useState([])
+
+
 	setInterval(() => {
 		setDate(getDate)
 	}, 100000)
@@ -63,7 +69,7 @@ export function Habits() {
 	}
 
 	useEffect(() => {
-		getUserHabits(setUserHabits, setHabitChecked)
+		getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted)
 		console.log(habitChecked)
 	}, [habitAdded, habitRemoved, habitChecked, date])
 
@@ -93,15 +99,41 @@ export function Habits() {
 			/>
 			{userHabits}	
 			<CalendarComponent
-				year={2020}
-				month={11}
+				year={calendarDate[0]}
+				month={calendarDate[1]}
+				habit={calendarHabit}
+				daysExecuted={calendarDaysExecuted}
+				nextCalendarClick={nextCalendarClick}
+				prevCalendarClick={prevCalendarClick}
+				setCalendarDate={setCalendarDate}
+
 			/>
 		</div>
 
 	)
 }
 
-export function getUserHabits(setUserHabits, setHabitChecked) {
+function nextCalendarClick(calendarDate, setCalendarDate) {
+	let [year, month] = calendarDate
+	if (month === 11) {
+		setCalendarDate(prevCalendarDate => [prevCalendarDate[0] + 1, 0])
+	}
+	else {
+		setCalendarDate(prevCalendarDate => [prevCalendarDate[0], prevCalendarDate[1] + 1])
+	}
+}
+
+function prevCalendarClick(calendarDate, setCalendarDate) {
+	let [year, month] = calendarDate
+	if (month === 0) {
+		setCalendarDate(prevCalendarDate => [prevCalendarDate[0] - 1, 11])
+	}
+	else {
+		setCalendarDate(prevCalendarDate => [prevCalendarDate[0], prevCalendarDate[1] - 1])
+	}
+}
+
+export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let habit_name = ''
@@ -128,7 +160,10 @@ export function getUserHabits(setUserHabits, setHabitChecked) {
 							status={habit._todays_status}
 							streak={habit._current_streak}
 							checkOff={habitCheckOff}
+							daysExecuted = {habit._days_executed}
 							setHabitChecked={setHabitChecked}
+							setCalendarHabit={setCalendarHabit}
+							setCalendarDaysExecuted={setCalendarDaysExecuted}
 						/>
 					)
 				}))
@@ -184,7 +219,11 @@ function habitCheckOff(habitName, setHabitChecked) {
 	setHabitChecked(prevHabitChecked => prevHabitChecked + 1)
 }
 
-
-
+function getCalendarDate() {
+	let date = new Date
+	let year = date.getYear() + 1900
+	let month = date.getMonth()
+	return [year, month]
+}
 
 

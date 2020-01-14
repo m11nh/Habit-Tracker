@@ -15,6 +15,8 @@ function CalendarComponent(props) {
 	 'November', 
 	 'December'
 	]
+
+
 	let days_in_month = 32 - new Date(props.year, props.month, '32').getDate();
 	let starting_day = new Date(props.year, props.month, '1').getDay();
 	let nextArrow = '❯';
@@ -22,16 +24,36 @@ function CalendarComponent(props) {
 
 	let empty = []
 	for (let i = 0; i < starting_day; i++) {
-		let empty_text = <td> HEY </td>
+		let empty_text = <td> </td>
 		empty.push(empty_text);
 	}
-	alert(empty.length)
-	console.log(starting_day);
-	console.log(days_in_month);
+	let total = []
+
+	for (let i = 1 + starting_day; i <= days_in_month + starting_day; i++) {
+		let day_number = i - starting_day; 
+		let date = `${props.year}-${props.month}-${day_number}`
+		let day_text = <td> {day_number} </td>
+		if (date in props.daysExecuted) {
+			day_text = <td className = "active"> {day_number} </td>;
+		}
+		console.log(props.daysExecuted)
+		empty.push(day_text)
+
+		if (i % 7 === 0 || i === days_in_month + starting_day) {
+			total.push(<tr> {empty} </tr>);
+			empty = []
+		}
+	}
+
 	return (
 		<div>
-			<p> { months[props.month] } { props.year } </p>
-			<p> {prevArrow} {nextArrow} </p>
+			<p> { months[props.month] } { props.year } { props.habit } </p>
+			<div onClick={ () => props.prevCalendarClick([props.year, props.month], props.setCalendarDate) }>
+				{ prevArrow } 
+			</div>
+			<div onClick={ () => props.nextCalendarClick([props.year, props.month], props.setCalendarDate) }>
+				{ nextArrow } 
+			</div>
 			<table>
 			<tr>
 				<th> sun </th>
@@ -42,9 +64,7 @@ function CalendarComponent(props) {
 				<th> fri </th>
 				<th> sat </th>
 			</tr>
-			<tr>
-				{empty}
-			</tr>
+			{ total }
 			</table>
 		</div>
 	)
