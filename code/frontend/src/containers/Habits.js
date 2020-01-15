@@ -29,7 +29,7 @@ export function Habits() {
 	const [ calendarDate, setCalendarDate ] = useState(getCalendarDate())
 	const [ calendarHabit, setCalendarHabit ] = useState("")
 	const [ calendarDaysExecuted, setCalendarDaysExecuted ] = useState([])
-
+	const [ habitCheckoffChange, setHabitCheckoffChange ] = useState(0)
 
 	setInterval(() => {
 		setDate(getDate)
@@ -69,9 +69,8 @@ export function Habits() {
 	}
 
 	useEffect(() => {
-		getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted)
-		console.log(habitChecked)
-	}, [habitAdded, habitRemoved, habitChecked, date])
+		getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted, setCalendarDate, setHabitCheckoffChange)
+	}, [habitAdded, habitRemoved, habitChecked, date, habitCheckoffChange])
 
 	return (
 		<div>
@@ -106,6 +105,7 @@ export function Habits() {
 				nextCalendarClick={nextCalendarClick}
 				prevCalendarClick={prevCalendarClick}
 				setCalendarDate={setCalendarDate}
+				habitCheckoffChange={habitCheckoffChange}
 
 			/>
 		</div>
@@ -133,7 +133,7 @@ function prevCalendarClick(calendarDate, setCalendarDate) {
 	}
 }
 
-export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted) {
+export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted, setCalendarDate, setHabitCheckoffChange) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let habit_name = ''
@@ -164,6 +164,8 @@ export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, 
 							setHabitChecked={setHabitChecked}
 							setCalendarHabit={setCalendarHabit}
 							setCalendarDaysExecuted={setCalendarDaysExecuted}
+							setCalendarDate={setCalendarDate}
+							setHabitCheckoffChange={setHabitCheckoffChange}
 						/>
 					)
 				}))
@@ -179,8 +181,16 @@ export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, 
 }
 
 function todaysStatusCheck(habit, setHabitChecked) {
-	let dateToday = new Date().toISOString().substring(0, 10);
+	let dateToday = new Date()
+
+	let year = dateToday.getFullYear()
+	let month = (dateToday.getMonth() < 10) ? `0${dateToday.getMonth() + 1}` : `${dateToday.getMonth()}`
+	let day = (dateToday.getDate() < 10) ? `0${dateToday.getDate()}` : `${dateToday.getDate()}`
+	dateToday = `${year}-${month}-${day}`
+
+
 	let recentDateHabit = habit._days_executed[habit._days_executed.length - 1]
+	console.log(recentDateHabit, dateToday)
 	console.log(habit)
 	if (habit._days_executed.length > 0) {
 		if (dateToday != recentDateHabit && habit._todays_status === true) {

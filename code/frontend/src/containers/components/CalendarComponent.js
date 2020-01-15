@@ -15,7 +15,10 @@ function CalendarComponent(props) {
 	 'November', 
 	 'December'
 	]
+	//alert(props.daysExecuted)
 
+	let year = props.year
+	let month = (props.month + 1) < 10 ? `0${props.month + 1}` : props.month + 1
 
 	let days_in_month = 32 - new Date(props.year, props.month, '32').getDate();
 	let starting_day = new Date(props.year, props.month, '1').getDay();
@@ -31,9 +34,9 @@ function CalendarComponent(props) {
 
 	for (let i = 1 + starting_day; i <= days_in_month + starting_day; i++) {
 		let day_number = i - starting_day; 
-		let date = `${props.year}-${props.month}-${day_number}`
+		let date = `${year}-${month}-${day_number}`
 		let day_text = <td> {day_number} </td>
-		if (date in props.daysExecuted) {
+		if (props.daysExecuted.includes(date)) {
 			day_text = <td className = "active"> {day_number} </td>;
 		}
 		console.log(props.daysExecuted)
