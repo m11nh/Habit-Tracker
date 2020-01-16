@@ -69,8 +69,8 @@ export function Habits() {
 	}
 
 	useEffect(() => {
-		getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted, setCalendarDate, setHabitCheckoffChange)
-	}, [habitAdded, habitRemoved, habitChecked, date, habitCheckoffChange])
+		getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted, setCalendarDate, setHabitCheckoffChange, calendarHabit)
+	}, [habitAdded, habitRemoved, habitChecked, date, habitCheckoffChange, calendarHabit])
 
 	return (
 		<div>
@@ -133,7 +133,7 @@ function prevCalendarClick(calendarDate, setCalendarDate) {
 	}
 }
 
-export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted, setCalendarDate, setHabitCheckoffChange) {
+export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, setCalendarDaysExecuted, setCalendarDate, setHabitCheckoffChange, calendarHabit) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let habit_name = ''
@@ -166,6 +166,7 @@ export function getUserHabits(setUserHabits, setHabitChecked, setCalendarHabit, 
 							setCalendarDaysExecuted={setCalendarDaysExecuted}
 							setCalendarDate={setCalendarDate}
 							setHabitCheckoffChange={setHabitCheckoffChange}
+							calendarHabit={calendarHabit}
 						/>
 					)
 				}))
@@ -213,8 +214,7 @@ function todaysStatusCheck(habit, setHabitChecked) {
 	}
 }
 
-function habitCheckOff(habitName, setHabitChecked) {
-	console.log(habitName)
+function habitCheckOff(habitName, setHabitChecked, calendarHabit, setCalendarDaysExecuted) {
 	let API = localStorage.getItem("API")
 	let userId = localStorage.getItem("userId")
 	let url = `${API}habit`;
@@ -223,7 +223,17 @@ function habitCheckOff(habitName, setHabitChecked) {
 	let fetch = fetchData(url, data, 'PUT')
 
 	fetch.then((response) => {
-		console.log(response.status)
+		if (habitName === calendarHabit) {
+			fetchData(`${API}habit?habit_name=${habitName}&user_id=${userId}`, {}, 'GET')
+			.then((response) => {
+				//alert(response.status)
+				return response.json()
+			})
+			.then(myJson => {
+				console.log(myJson._days_executed)
+				setCalendarDaysExecuted(myJson._days_executed)
+			})
+		}
 	})
 
 	setHabitChecked(prevHabitChecked => prevHabitChecked + 1)

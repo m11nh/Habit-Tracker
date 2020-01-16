@@ -4,7 +4,7 @@ function HabitComponent(props) {
 	return (
 		<div>
 			<div onClick={() => {
-				props.checkOff(props.name, props.setHabitChecked)
+				props.checkOff(props.name, props.setHabitChecked, props.calendarHabit,props.setCalendarDaysExecuted)
 				props.setHabitCheckoffChange(prev => prev + 1)
 			}} style={{color: props.status === true ? "green" : "black"}}> {props.name} {props.streak} </div>
 			<div onClick={() => {
