@@ -1,45 +1,88 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import fetchData from "./components/formHandling/fetchTools"
+import AccountComponent from "./components/AccountComponent"
+
 
 function Account() {
-	const [AccountFormVisibility, SetAccountFormVisibility] = useState("")
+	const [AccountFormVisibility, setAccountFormVisibility] = useState("")
 
-	const [ oldPassword, SetOldPassword ] = useState("")
-	const [ newPassword, SetNewPassword ] = useState("")
+	const [ oldPassword, setOldPassword ] = useState("")
+	const [ newPassword, setNewPassword ] = useState("")
 	const [ passwordErrors, setPasswordErrors ] = useState("")
 
-	const [ oldEmail, SetOldEmail ] = useState("")
-	const [ newEmail, SetNewEmail ] = useState("")
+	const [ newEmail, setNewEmail ] = useState("")
 	const [ emailErrors, setEmailErrors ] = useState("")
 
-	function submitPassword(event) {
-		event.preventDefault()
-	}
-
-	function submitEmail(event) {
-		event.preventDefault()
-	}
-
 	return (
-		<div>
-			<button onClick = {() => SetAccountFormVisibility(prev => prev === "none" ? "" : "none")}>
-				Account
-			</button>
-			<div style={{display: AccountFormVisibility}}>
-				<form onSubmit={(event) => submitPassword(event)}>
-					<input onChange={ (event) => SetOldPassword(event.value) } type="text" value={ oldPassword } placeholder="old password"/>
-					<input onChange={ (event) => SetNewPassword(event.value) } type="text" value={ newPassword } placeholder="new password"/>
-					<button> change password </button>	
-					{passwordErrors}
-				</form>
-				<form onSubmit={(event) => submitEmail(event)}>
-					<input onChange={ (event) => SetOldEmail(event.value) } type="text" value={ oldEmail } placeholder="old email"/>
-					<input onChange={ (event) => SetNewEmail(event.value) } type="text" value={ newEmail } placeholder="new email"/>
-					<button> change email </button>
-					{emailErrors}
-				</form>
-			</div>
-		</div>
+		<AccountComponent 
+			AccountFormVisibility={AccountFormVisibility}
+			setAccountFormVisibility={setAccountFormVisibility}
+
+			oldPassword={oldPassword}
+			newPassword={newPassword}
+			passwordErrors={passwordErrors}
+
+			setOldPassword={setOldPassword}
+			setNewPassword={setNewPassword}
+			setPasswordErrors={setPasswordErrors}
+
+			newEmail={newEmail}
+			emailErrors={emailErrors}
+
+			setNewEmail={setNewEmail}
+			setEmailErrors={setEmailErrors}
+
+			submitPassword={submitPassword}
+			submitEmail={submitEmail}
+		/>
 	)
 }
 
 export default Account
+
+function submitPassword(event, oldPassword, newPassword, setPasswordErrors) {
+	let API = localStorage.getItem("API")
+	let userId = localStorage.getItem("userId")
+	let url = `${API}user`
+	let data = {
+		'user_id' : userId,
+		'action' : 'changePassword',
+		'oldPassword' : oldPassword, 
+		'newPassword' : newPassword
+	}
+	console.log(data)
+	let fetch = fetchData(url, data, "PUT")
+	fetch.then(response => {
+		if (response.status == "200") {
+			setPasswordErrors('successfully changed password')
+		}
+		return response.json()
+	}).then(myJson => {
+		console.log(myJson)
+		setPasswordErrors(myJson.error)
+	})
+	event.preventDefault()
+}
+
+function submitEmail(event, newEmail, setEmailErrors) {
+	let API = localStorage.getItem("API")
+	let userId = localStorage.getItem("userId")
+	let url = `${API}user`
+	let data = {
+		'user_id' : userId,
+		'action' : 'changeEmail',
+		'newEmail' : newEmail
+	}
+	console.log(data)
+	let fetch = fetchData(url, data, "PUT")
+	fetch.then(response => {
+		if (response.status == "200") {
+			setEmailErrors('successfully changed email')
+		}
+		return response.json()
+	}).then(myJson => {
+		console.log(myJson)
+		setEmailErrors(myJson.error)
+	})
+	event.preventDefault()
+}

@@ -9,11 +9,16 @@ date		| time	| activity			| comments
 3/1/20		| 25m	| coding			| cleaning up remove habit
 11/1/20		| 100m 	| coding			| completed remove habit, working on checkoff habit
 12/1/20		| 100m 	| coding 			| added time component, working on checkoff reset
+13/1/20		| 100m 	| coding			| todays status resets upon new day, working on calendar
+14/1/20		| 100m 	| coding			| working on calendar, making sure things are displayed properly
+15/1/20		| 100m 	| coding			| working on calendar, trying to make active dynamically change
+16/1/20		| 100m 	| coding			| completed calendar, working on change password/email
+17/1/20		| 100m	| coding			| completed changePassword
 
 Current objective: 
-- complete US5 - As a user, I want to be able to check off a habit I’ve completed on the current date. 
-- make the habits uncheck themselves when a new day begins (2 cases)
-
+- recheck bug tomorrow: debug: on new day, current date is ticked off for every habit on TEST ACCOUNT - test, account - all habits except last one initially checked off for the 18th, now should be unchecked 
+- work on change email
+- add account details
 
 Long term plan
 - finish doing frontend and backend
@@ -21,8 +26,14 @@ Long term plan
 - style my app
 
 Other
-- implement method security (more encryption involved from api calls)
+- implement method security (more encryption involved from api calls) + validate the user id in the backend ihabit_system methods
 - make user unable to add habits that already exists (changes to backend)
 - make things like "successfully removed" indicator only show for a few seconds then disappear 
 - allow anything except empty for add/remove habit field validation
+- fix update habit delay/bug
 
+
+Accounts
+- minh nguyen
+- john wick
+- nathan tien

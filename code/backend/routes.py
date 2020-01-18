@@ -3,7 +3,7 @@ from flask_api import status
 from server import app
 from classes.iHabit_system import iHabit_system
 from client import start_client, pickle_update
-from validation.form_validation import validate_signup, validate_login, validate_habit_name
+from validation.form_validation import validate_signup, validate_login, validate_habit_name, validate_password, validate_email
 
 system = start_client()
  
@@ -15,7 +15,7 @@ def get_user():
 	user = system.get_user(user_id)
 	if (user != -1):
 		return user.toJSON()
- 
+  
 @app.route("/user", methods = ["POST"])
 def add_user():
 	data = request.get_json()
@@ -37,7 +37,44 @@ def add_user():
 
 @app.route("/user", methods = ["PUT"])
 def update_user():
-	pass
+	data = request.get_json()
+	action = data['action']
+	user_id = data['user_id']
+
+	# change password
+	if action == "changePassword": 
+		oldPassword = data['oldPassword']
+		newPassword = data['newPassword']
+		if validate_password(newPassword) == 0:
+			result = system.change_password(user_id, oldPassword, newPassword)
+			if result == 0: 
+				pickle_update(system)
+				return {'error' : 'successfully changed password'}, status.HTTP_200_OK
+			else: 
+				error = {'error' : 'old password is incorrect'}
+				return  error, status.HTTP_400_BAD_REQUEST
+		
+		else:
+			error = {'error' : validate_password(newPassword)}
+			return error, status.HTTP_400_BAD_REQUEST
+
+	# change email
+	elif action == "changeEmail":
+		newEmail = data['newEmail']
+		if validate_email(newEmail) == 0:
+			result = system.change_email(user_id, newEmail)
+			if result == 0:
+				pickle_update(system)
+				return {'error' : 'successfully changed email'}, status.HTTP_200_OK
+			else: 
+				error = {'error' : 'email must be different to current one'}
+				return  error, status.HTTP_400_BAD_REQUEST
+		else: 
+			error = {'error' : validate_email(newEmail)}
+			return error, status.HTTP_400_BAD_REQUEST
+
+	else: 
+		return  {}, status.HTTP_400_BAD_REQUEST
 
 @app.route("/user", methods = ["DELETE"])
 def remove_user():

@@ -90,13 +90,18 @@ class iHabit_system():
 
 	def change_email(self, user_id, new_email):
 		user = self.get_user(user_id)
-		# add field validation here
+		if (new_email == user.email): 
+			return -1
 		user.email = new_email
+		return 0
 		
-	def change_password(self, user_id, new_password):
+	def change_password(self, user_id, old_password, new_password):
 		user = self.get_user(user_id)
-		# add field validation here
-		user.password = new_password
+		if user.password != old_password: 
+			return -1
+		else: 
+			user.password = new_password
+			return 0
 
 	def user_remove_account(self, user_id, password):
 		# validation goes here

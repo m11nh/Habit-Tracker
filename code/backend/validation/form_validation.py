@@ -33,7 +33,21 @@ def validate_habit_name(habit_name):
 	else:
 		return habit_name_errors
 
+def validate_password(password): 
+	password_errors = standard_field_validator('password', password, 4, False)
+	if (password_errors == 0): 
+		return 0
+	else:
+		return password_errors
 
+def validate_email(email): 
+	email_errors = email_validator(email)
+	if email_errors == 0: 
+		return 0
+	else: 
+		return email_errors
+
+ 
 
 
 
