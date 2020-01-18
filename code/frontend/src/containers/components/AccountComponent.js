@@ -19,6 +19,8 @@ function AccountComponent(props) {
 					{props.emailErrors}
 				</form>
 			</div>
+			<p>{props.username}</p>
+			{props.email}
 		</div>
 	)
 }

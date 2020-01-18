@@ -14,11 +14,13 @@ date		| time	| activity			| comments
 15/1/20		| 100m 	| coding			| working on calendar, trying to make active dynamically change
 16/1/20		| 100m 	| coding			| completed calendar, working on change password/email
 17/1/20		| 100m	| coding			| completed changePassword
+18/1/20
 
 Current objective: 
 - recheck bug tomorrow: debug: on new day, current date is ticked off for every habit on TEST ACCOUNT - test, account - all habits except last one initially checked off for the 18th, now should be unchecked 
-- work on change email
 - add account details
+	- name
+	- email
 
 Long term plan
 - finish doing frontend and backend

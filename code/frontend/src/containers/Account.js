@@ -13,6 +13,12 @@ function Account() {
 	const [ newEmail, setNewEmail ] = useState("")
 	const [ emailErrors, setEmailErrors ] = useState("")
 
+	// account details
+	const [ username, setUsername ] = useState("")
+	const [ email, setEmail ] = useState("")
+
+	getUser(setUsername, setEmail)
+
 	return (
 		<AccountComponent 
 			AccountFormVisibility={AccountFormVisibility}
@@ -34,6 +40,9 @@ function Account() {
 
 			submitPassword={submitPassword}
 			submitEmail={submitEmail}
+
+			email={email}
+			username={username}
 		/>
 	)
 }
@@ -85,4 +94,18 @@ function submitEmail(event, newEmail, setEmailErrors) {
 		setEmailErrors(myJson.error)
 	})
 	event.preventDefault()
+}
+
+function getUser(setUsername, setEmail) {
+	let API = localStorage.getItem("API")
+	let userId = localStorage.getItem("userId")
+	let url = `${API}user?user_id=${userId}`
+
+	let fetch = fetchData(url, {}, "GET")
+	fetch.then(response => {
+		return response.json()
+	}).then(myJson => {
+		setUsername(myJson.username)
+		setEmail(myJson.email)
+	})
 }

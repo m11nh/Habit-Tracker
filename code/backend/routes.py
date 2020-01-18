@@ -10,11 +10,10 @@ system = start_client()
 # USER SERVICES
 @app.route("/user", methods = ["GET"])
 def get_user():
-	data = request.get_json()
-	user_id = data["user_id"]
+	user_id = int(request.args.get('user_id'))
 	user = system.get_user(user_id)
 	if (user != -1):
-		return user.toJSON()
+		return {'username': user.username, 'email': user.email}, status.HTTP_200_OK
   
 @app.route("/user", methods = ["POST"])
 def add_user():
