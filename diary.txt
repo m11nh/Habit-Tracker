@@ -14,11 +14,11 @@ date		| time	| activity			| comments
 15/1/20		| 100m 	| coding			| working on calendar, trying to make active dynamically change
 16/1/20		| 100m 	| coding			| completed calendar, working on change password/email
 17/1/20		| 100m	| coding			| completed changePassword
-18/1/20
+18/1/20		| 100m 	| coding			| completed show email, attempted to fix up bug and made account show more account details
 
 Current objective: 
 - recheck bug tomorrow: debug: on new day, current date is ticked off for every habit on TEST ACCOUNT - test, account - all habits except last one initially checked off for the 18th, now should be unchecked 
-- add account details
+- clean up account details
 	- name
 	- email
 
