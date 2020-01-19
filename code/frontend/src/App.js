@@ -28,6 +28,7 @@ function App() {
 			<div>
 				<SignupContainer />
 				<LoginContainer />
+				{localStorage.getItem("message")}
 			</div>
 		)
 	}

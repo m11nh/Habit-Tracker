@@ -77,8 +77,16 @@ def update_user():
 
 @app.route("/user", methods = ["DELETE"])
 def remove_user():
-	data = request.get_json()
-	return "hey HEEEEEY BUDDY"
+	user_id = request.args.get('user_id')
+	password = request.args.get('password')
+	user = system.get_user(user_id)
+	# check password
+	if (user.password != password): 
+		error = {'error' : 'password is incorrect'}
+		return error, status.HTTP_400_BAD_REQUEST
+
+	remove_account = system.user_remove_account(user_id, password)
+	return {}, status.HTTP_200_OK
 
 # ADMIN SERVICES
 @app.route("/admin", methods = ["GET"])
@@ -168,7 +176,6 @@ def update_habit_status():
 	checkoff = system.checkoff_habit(user_id, habit_name)
 	if action == 'check':
 		if checkoff == -1:
-			print('checkoff is -1');
 			return {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
 		elif checkoff == -2: 
 			system.uncheck_habit(user_id, habit_name)
@@ -181,7 +188,7 @@ def update_habit_status():
 			return {'habit_status' : 'checked'}, status.HTTP_200_OK
 			
 	elif action == 'todays_status_to_false':
-		change_todays_status = system.todays_status_to_false(user_id, habit_name)
+		change_todays_status = system.uncheck_habit(user_id, habit_name)
 		if change_todays_status == -1: 
 			return  {'error' : 'user_id or habit name is invalid'}, status.HTTP_400_BAD_REQUEST
 		else: 

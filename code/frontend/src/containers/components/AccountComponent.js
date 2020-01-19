@@ -18,9 +18,14 @@ function AccountComponent(props) {
 					<button> change email </button>
 					{props.emailErrors}
 				</form>
+				<form onSubmit={(event) => props.submitDeleteAccount(event, props.deletePassword, props.setDeletePasswordErrors)}> 
+					<input onChange={ (event) => props.setDeletePassword(event.target.value) } type="password" value={ props.deletePassword } placeholder="password"/>
+					<button> Delete Account </button>
+					{props.deletePasswordErrors}
+				</form>
 			</div>
-			<p>{props.username}</p>
-			{props.email}
+			<p> username: {props.username} </p>
+			<p> email: {props.email} </p>
 		</div>
 	)
 }

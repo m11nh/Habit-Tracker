@@ -26,6 +26,7 @@ function LoginContainer() {
 	function handleSubmit(event) {
 		let API = localStorage.getItem("API")
 		handleLogin(username, password, API, setErrors)
+		localStorage.setItem("message", "")
 		event.preventDefault()
 	}
 

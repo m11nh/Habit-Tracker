@@ -2,7 +2,7 @@ from classes.user import user
 from classes.habit import habit
 from classes.admin import admin
 from datetime import date
-
+ 
 class iHabit_system():
 	def __init__(self):
 		self._user_list = []
@@ -104,12 +104,10 @@ class iHabit_system():
 			return 0
 
 	def user_remove_account(self, user_id, password):
-		# validation goes here
 		user = self.get_user(user_id)
 		if user in self._user_list:
 			self._user_list.remove(user)
-		else: 
-			return -1
+		return -1
 
 	def admin_view_list_account(self): 
 		return self._user_list
