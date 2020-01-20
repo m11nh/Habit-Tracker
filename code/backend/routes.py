@@ -217,5 +217,18 @@ def auth_user():
 	
 @app.route("/auth/admin", methods = ["POST"])
 def auth_admin():
-	pass
+	data = request.get_json()
+	username = data["username"]
+	password = data["password"]
+	if validate_login(username, password) == 0:
+		if system.authenticate_admin(username, password) == 0:
+			id = {'id' : system.get_admin_id(username)}
+			return id, status.HTTP_200_OK
+		else: 
+			error = {'error' : 'wrong username or password'}
+			return error, status.HTTP_400_BAD_REQUEST
+	else: 
+		error = {'error' : validate_login(username, password)}
+		return error, status.HTTP_400_BAD_REQUEST
+
 

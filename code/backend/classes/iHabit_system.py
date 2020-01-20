@@ -12,7 +12,7 @@ class iHabit_system():
 			"admin": 0, 
 			"habit": 0
 		}
-
+ 
 	@property 
 	def user_list(self):
 		return self._user_list
@@ -88,6 +88,13 @@ class iHabit_system():
 				return 0
 		return -1
 
+	def authenticate_admin(self, username, password):
+		# add field validation here
+		for admin in self._admin_list:
+			if admin.username == username and admin.password == password: 
+				return 0
+		return -1
+
 	def change_email(self, user_id, new_email):
 		user = self.get_user(user_id)
 		if (new_email == user.email): 
@@ -139,6 +146,11 @@ class iHabit_system():
 		for user in self._user_list:
 			if user.username == username: 
 				return user.id
+
+	def get_admin_id(self, username): 
+		for admin in self._admin_list:
+			if admin.username == username: 
+				return admin.id
 
 	def get_admin(self, admin_id): 
 		for admin in self._admin_list:

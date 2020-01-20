@@ -3,7 +3,7 @@ import LoginComponent from "./components/LoginComponent"
 import handleLogin from "./components/formHandling/handleLogin"
 
 function LoginContainer() {
-	const [formVisibility, setFormVisibility] = useState("")
+	const [formVisibility, setFormVisibility] = useState("None")
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [errors, setErrors] = useState("")

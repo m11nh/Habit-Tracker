@@ -20,6 +20,7 @@ function handleLogin(username, password, API, setErrors) {
 				// set id and username of logged in user into localStorage
 				localStorage.setItem("userId", myJson.id)
 				localStorage.setItem("userName", data.username)
+				localStorage.setItem("type", "user")
 
 				// refreshes the page
 				document.location.reload()
