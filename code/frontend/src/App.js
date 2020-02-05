@@ -8,6 +8,7 @@ import Logout from './containers/Logout'
 import { TimeDateContainer } from './containers/TimeDateContainer'
 import { Habits }from './containers/Habits'
 import Account from './containers/Account'
+import UserList from './containers/UserList'
 
 function App() {
  	localStorage.setItem("API", "http://127.0.0.1:5000/")
@@ -29,7 +30,7 @@ function App() {
 		return (
 			<div>
 				<Logout />
-				WATS UP G's
+				<UserList />
 			</div>
 		)
 	}
